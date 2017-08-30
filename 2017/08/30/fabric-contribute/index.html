@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="区块链,ASTRI,比特币,重构,挖坑," />
+  <meta name="keywords" content="区块链,hyperledger,fabric," />
 
 
 
@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="摘要本文主要记录了在基于旧有比特币区块链应用的基础上，如何快速进行概念原形的设计开发">
-<meta name="keywords" content="区块链,ASTRI,比特币,重构,挖坑">
+<meta name="description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux foundat">
+<meta name="keywords" content="区块链,hyperledger,fabric">
 <meta property="og:type" content="article">
-<meta property="og:title" content="孤立的结构与重构 ---区块链(blockchain)应用快速原形开发实践">
-<meta property="og:url" content="http://yoursite.com/2017/04/28/hkma-refactor/index.html">
+<meta property="og:title" content="如何给Hyperledger-fabric贡献代码">
+<meta property="og:url" content="http://yoursite.com/2017/08/30/fabric-contribute/index.html">
 <meta property="og:site_name" content="金刚狼区块链十天征服你^-^">
-<meta property="og:description" content="摘要本文主要记录了在基于旧有比特币区块链应用的基础上，如何快速进行概念原形的设计开发">
+<meta property="og:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux foundat">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-30T01:41:52.419Z">
+<meta property="og:updated_time" content="2017-08-30T03:40:52.529Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孤立的结构与重构 ---区块链(blockchain)应用快速原形开发实践">
-<meta name="twitter:description" content="摘要本文主要记录了在基于旧有比特币区块链应用的基础上，如何快速进行概念原形的设计开发">
+<meta name="twitter:title" content="如何给Hyperledger-fabric贡献代码">
+<meta name="twitter:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux foundat">
 
 
 
@@ -129,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/28/hkma-refactor/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/30/fabric-contribute/"/>
 
 
 
 
 
-  <title> 孤立的结构与重构 ---区块链(blockchain)应用快速原形开发实践 | 金刚狼区块链十天征服你^-^ </title>
+  <title> 如何给Hyperledger-fabric贡献代码 | 金刚狼区块链十天征服你^-^ </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -264,7 +264,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/28/hkma-refactor/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/30/fabric-contribute/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="davidLiu">
@@ -285,7 +285,7 @@
             
             
               
-                孤立的结构与重构 ---区块链(blockchain)应用快速原形开发实践
+                如何给Hyperledger-fabric贡献代码
               
             
           </h1>
@@ -300,8 +300,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-28T12:23:15+08:00">
-                2017-04-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-30T10:29:39+08:00">
+                2017-08-30
               </time>
             
 
@@ -311,28 +311,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Refactor/" itemprop="url" rel="index">
-                    <span itemprop="name">Refactor</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -341,9 +319,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/04/28/hkma-refactor/#comments" itemprop="discussionUrl">
+                <a href="/2017/08/30/fabric-contribute/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/04/28/hkma-refactor/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/08/30/fabric-contribute/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -368,53 +346,49 @@
       
 
       
-        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文主要记录了在基于旧有比特币区块链应用的基础上，如何快速进行概念原形的设计开发</p>
-<a id="more"></a>
-<h1 id="前情"><a href="#前情" class="headerlink" title="前情"></a>前情</h1><p>去年7月开始到2月左右，我们ICDD-ASIC组跟HKEX做了一套Corporate-Action的概念原型，我在其中负责安卓开发和一些测试开发，由于我司的氛围倾向于少交流，少共用，多报告，我也只能尽我所了解的去解释一下</p>
-<h2 id="Corporate-Action与HKEX"><a href="#Corporate-Action与HKEX" class="headerlink" title="Corporate-Action与HKEX"></a>Corporate-Action与HKEX</h2><p>HKEX就是港交所<a href="https://www.hkex.com.hk/eng/index.htm" target="_blank" rel="external">https://www.hkex.com.hk/eng/index.htm</a></p>
-<p>Corporate-Action直译过来就是公司决策。<br>HKEX的希望我们用blockchain的长处尝试优化原有的公司决策系统</p>
+        <p>本文整理了刘文亮的指引，仅作为对<a href="https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html" target="_blank" rel="external">https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html</a><br>的补充说明</p>
+<h2 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h2><ul>
+<li>git</li>
+<li>gerrit所需的组件：git-review，安装方法见 <a href="https://www.mediawiki.org/wiki/Gerrit/git-review" target="_blank" rel="external">https://www.mediawiki.org/wiki/Gerrit/git-review</a></li>
+</ul>
+<h2 id="取得权限"><a href="#取得权限" class="headerlink" title="取得权限"></a>取得权限</h2><p>注册 Linux foundation ID，就是linux基金会的账号，简称为LFID </p>
+<p><strong>gerrit基本不支持匿名操作</strong></p>
+<h2 id="code-of-contributor贡献者守则"><a href="#code-of-contributor贡献者守则" class="headerlink" title="code of contributor贡献者守则"></a>code of contributor贡献者守则</h2><p>代码是为了修复jira上提出的issue的，如果是新功能，也要创造一个新issue去‘修复’<br>记下我们要修复的问题的序号，比如FAB-XXXX，我们后面会用到</p>
+<h2 id="获取代码"><a href="#获取代码" class="headerlink" title="获取代码"></a>获取代码</h2><ol>
+<li>进入<a href="https://gerrit.hyperledger.org/，并登陆你的LFID" target="_blank" rel="external">https://gerrit.hyperledger.org/，并登陆你的LFID</a><br><em>登陆入口在右上角，Search按钮下面有个‘Sign in’</em>  </li>
+<li><p>查看项目列表，找到对应项目，这里以 lf-sandbox 项目为例子<br><em>lf-sandbox项目不是fabric项目，而是官方推荐拿来学习试用gerrit用的沙盒项目</em></p>
+</li>
+<li><p>点选左上角的<code>Clone with commit-msg hook</code>按钮<br><em>错误示例：如果没有登陆你的LFID，你将看不到<code>Clone with commit-msg hook</code>按钮，只能看到anonymous http 命令<code>git clone https://gerrit.hyperledger.org/r/lf-sandbox</code>，匿名clone下来的项目在后面提交时会出现commit hook缺失的错误</em></p>
+</li>
+<li><p>在按钮同一栏的右边，选择验证方式 ssh|http，并复制其下方的clone命令</p>
 <ul>
-<li>决策系统<br>上市公司每个季度或者不定期需要开股东大会，而对于不能参加股东大会的持股人，他们会通过发布内部公告（Announcement）的方式通知他们并收集他们的反馈，这些公告的内容一般会包括：<br>· 下届董事会主席任免<br>· 富余资产管理流向，比如派股，派息<br>· 公司重大决策意见反馈，比如退市，并购</li>
+<li>ssh验证：需要先生成本机的ssh pubkey文件，并在<a href="https://gerrit.hyperledger.org/的个人设置中将pubkey的内容加入列表中，才可以使用" target="_blank" rel="external">https://gerrit.hyperledger.org/的个人设置中将pubkey的内容加入列表中，才可以使用</a><br>好处：操作时不用交互输入密码<br>坏处：每台机器的pubkey都需要加入个人设置中，某些情况下会因为防火墙timeout  </li>
+<li>http验证（推荐）：<br>clone命令形如：<code>git clone https://&lt;LFID&gt;@gerrit.hyperledger.org/r/a/lf-sandbox &amp;&amp; (cd lf-sandbox &amp;&amp; curl -kLo</code>git rev-parse –git-dir<code>/hooks/commit-msg https://&lt;LFID&gt;@gerrit.hyperledger.org/r/tools/hooks/commit-msg; chmod +x</code>git rev-parse –git-dir<code>/hooks/commit-msg)</code></li>
 </ul>
-<p>我们发现这一系列流程都可以通过一个投票系统来实现，而世界上也有不少的实例佐证区块链适宜来构造一个投票系统。</p>
-<h5 id="用户性质"><a href="#用户性质" class="headerlink" title="用户性质"></a>用户性质</h5><ul>
-<li>交易所：HKEX本体，管理着众多上市公司</li>
-<li>公司：我们原型项目里面只设立了一家公司</li>
-<li>散户（CPC）: 散户通过券商间接持有该公司的股票</li>
-<li>券商（CP）：持有大量股票的代理机构，除了管理散户之外，还管理着机构自身的官方账户（CP house）</li>
-<li>大户，独立持股人（IP）：直接持有公司股票的个人</li>
-</ul>
-<h5 id="Colored-coin技术"><a href="#Colored-coin技术" class="headerlink" title="Colored coin技术"></a>Colored coin技术</h5><p>该技术用于传递任意文字信息（有长度限制的byte[]）。通俗理解就是在比特币发送的时候，发送者将文本写在交易单（Transaction）里面，使得比特币的接收者和接收地址监听者可以收到文本信息。</p>
-<ul>
-<li>如果有兴趣我就再写一片关于Colored coin技术的文章</li>
-</ul>
-<h2 id="整体流程"><a href="#整体流程" class="headerlink" title="整体流程"></a>整体流程</h2><ol>
-<li>公司发出公告并通知交易所<ul>
-<li>由于所有人注册了交易所的信息，所以能看到任何公司的公告</li>
-<li>每项公告可以包括多个投票问题（Question）</li>
-<li>公司将含有公告正文的Colored coin发给交易所</li>
-</ul>
+<ol>
+<li>选择一个父目录，执行刚才复制的clone命令，下载代码</li>
+<li><p>创建一个branch，名字格式为 FAB-XXXX （issue序号）  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b FAB-XXXX</div></pre></td></tr></table></figure>
+<ol>
+<li>重命名远端为gerrit<br><em>否则在git review时会提示.gerrit文件不存在</em></li>
+<li>正式干活了，修复issue</li>
+<li>提交 ：<code>$git commit -a -s</code><br><em>-s 选项不能漏，因为是帮你在commit message中自动生成sign off签名的</em></li>
+</ol>
 </li>
-<li>券商（CP）见到公告后，直到投票期结束前，每天晚上给被确认的持股人发放投票牌 (Voting token)<ul>
-<li>持股确认：结算持股人的持股数量</li>
-<li>券商将作为投票牌发送Colored coin给持股人</li>
-<li>券商的持股人包括CPC，CP house</li>
-<li>注意：已经发出的投票牌不会被收回，详情见后</li>
-</ul>
-</li>
-<li><p>与2类似，交易所作为IP的特殊券商，也会进行对应的操作</p>
-</li>
-<li><p>收到投票牌之后，在投票截至前，进行投票</p>
-<ul>
-<li>持股人将含有投票决策信息的Colored coin发给自己的券商，CPC和CP House发给所属的CP，IP发给HKEX</li>
-</ul>
-</li>
-<li>投票截止后，结合每个投票问题所设的权重法和截止当日投票人的持股确认情况，综合计算结果（Voting summary）<ul>
-<li>券商和HKEX都会将含有投票结果的Colored coin发还给发出公告的公司</li>
-</ul>
+<li><p>git会进入你设置的文本编辑器里编辑commit message<br>message推荐以这种格式编写</p>
+<blockquote>
+<p>&lt;标题&gt;<br>This fix #FAB-XXXX<br>&lt;内容&gt;</p>
+</blockquote>
+<ol>
+<li><code>$ git rebase master</code><br><em>可能是为了生成channge-id</em><ol>
+<li>提交： <code>$ git review</code><br><em>gerrit不用push作为提交</em></li>
+</ol>
 </li>
 </ol>
-<p>——-待续———</p>
+</li>
+</ol>
+</li>
+</ol>
 
       
     </div>
@@ -446,13 +420,9 @@
           
             <a href="/tags/区块链/" rel="tag"># 区块链</a>
           
-            <a href="/tags/ASTRI/" rel="tag"># ASTRI</a>
+            <a href="/tags/hyperledger/" rel="tag"># hyperledger</a>
           
-            <a href="/tags/比特币/" rel="tag"># 比特币</a>
-          
-            <a href="/tags/重构/" rel="tag"># 重构</a>
-          
-            <a href="/tags/挖坑/" rel="tag"># 挖坑</a>
+            <a href="/tags/fabric/" rel="tag"># fabric</a>
           
         </div>
       
@@ -465,8 +435,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/02/srccompat1_7/" rel="next" title="安卓sourceCompatibility = '1.7'系列解决思路">
-                <i class="fa fa-chevron-left"></i> 安卓sourceCompatibility = '1.7'系列解决思路
+              <a href="/2017/05/24/gitignore-windows-path/" rel="next" title="排雷：gitignore_global在windows环境下的路径写法">
+                <i class="fa fa-chevron-left"></i> 排雷：gitignore_global在windows环境下的路径写法
               </a>
             
           </div>
@@ -474,10 +444,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/24/gitignore-windows-path/" rel="prev" title="排雷：gitignore_global在windows环境下的路径写法">
-                排雷：gitignore_global在windows环境下的路径写法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -642,7 +608,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前情"><span class="nav-number">2.</span> <span class="nav-text">前情</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Corporate-Action与HKEX"><span class="nav-number">2.1.</span> <span class="nav-text">Corporate-Action与HKEX</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#用户性质"><span class="nav-number">2.1.0.0.1.</span> <span class="nav-text">用户性质</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Colored-coin技术"><span class="nav-number">2.1.0.0.2.</span> <span class="nav-text">Colored coin技术</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整体流程"><span class="nav-number">2.2.</span> <span class="nav-text">整体流程</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装环境"><span class="nav-number">1.</span> <span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取得权限"><span class="nav-number">2.</span> <span class="nav-text">取得权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code-of-contributor贡献者守则"><span class="nav-number">3.</span> <span class="nav-text">code of contributor贡献者守则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取代码"><span class="nav-number">4.</span> <span class="nav-text">获取代码</span></a></li></ol></div>
             
 
           </div>
@@ -785,9 +751,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2017/04/28/hkma-refactor/';
-          this.page.identifier = '2017/04/28/hkma-refactor/';
-          this.page.title = '孤立的结构与重构 ---区块链(blockchain)应用快速原形开发实践';
+          this.page.url = 'http://yoursite.com/2017/08/30/fabric-contribute/';
+          this.page.identifier = '2017/08/30/fabric-contribute/';
+          this.page.title = '如何给Hyperledger-fabric贡献代码';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://davidkhala.disqus.com/embed.js';
