@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux foundat">
+<meta name="description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明，并一并感谢 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux f">
 <meta name="keywords" content="区块链,hyperledger,fabric">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何给Hyperledger-fabric贡献代码">
 <meta property="og:url" content="http://yoursite.com/2017/08/30/fabric-contribute/index.html">
 <meta property="og:site_name" content="金刚狼区块链十天征服你^-^">
-<meta property="og:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux foundat">
+<meta property="og:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明，并一并感谢 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux f">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-30T03:40:52.529Z">
+<meta property="og:updated_time" content="2017-08-30T03:57:49.837Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何给Hyperledger-fabric贡献代码">
-<meta name="twitter:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux foundat">
+<meta name="twitter:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明，并一并感谢 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux f">
 
 
 
@@ -346,48 +346,47 @@
       
 
       
-        <p>本文整理了刘文亮的指引，仅作为对<a href="https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html" target="_blank" rel="external">https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html</a><br>的补充说明</p>
+        <p>本文整理了刘文亮的指引，仅作为对<a href="https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html" target="_blank" rel="external">https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html</a><br>的补充说明，并一并感谢</p>
 <h2 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h2><ul>
 <li>git</li>
 <li>gerrit所需的组件：git-review，安装方法见 <a href="https://www.mediawiki.org/wiki/Gerrit/git-review" target="_blank" rel="external">https://www.mediawiki.org/wiki/Gerrit/git-review</a></li>
 </ul>
 <h2 id="取得权限"><a href="#取得权限" class="headerlink" title="取得权限"></a>取得权限</h2><p>注册 Linux foundation ID，就是linux基金会的账号，简称为LFID </p>
-<p><strong>gerrit基本不支持匿名操作</strong></p>
+<p><em>gerrit基本不支持匿名操作</em></p>
 <h2 id="code-of-contributor贡献者守则"><a href="#code-of-contributor贡献者守则" class="headerlink" title="code of contributor贡献者守则"></a>code of contributor贡献者守则</h2><p>代码是为了修复jira上提出的issue的，如果是新功能，也要创造一个新issue去‘修复’<br>记下我们要修复的问题的序号，比如FAB-XXXX，我们后面会用到</p>
 <h2 id="获取代码"><a href="#获取代码" class="headerlink" title="获取代码"></a>获取代码</h2><ol>
-<li>进入<a href="https://gerrit.hyperledger.org/，并登陆你的LFID" target="_blank" rel="external">https://gerrit.hyperledger.org/，并登陆你的LFID</a><br><em>登陆入口在右上角，Search按钮下面有个‘Sign in’</em>  </li>
-<li><p>查看项目列表，找到对应项目，这里以 lf-sandbox 项目为例子<br><em>lf-sandbox项目不是fabric项目，而是官方推荐拿来学习试用gerrit用的沙盒项目</em></p>
+<li>进入<a href="https://gerrit.hyperledger.org/，并登陆你的LFID" target="_blank" rel="external">https://gerrit.hyperledger.org/，并登陆你的LFID</a><br> <em>登陆入口在右上方，Search按钮下面有个‘Sign in’</em>  </li>
+<li><p>查看项目列表，找到对应项目，这里以 lf-sandbox 项目为例子<br> <em>lf-sandbox项目不是 fabric项目，而是官方推荐拿来学习 gerrit用的沙盒项目</em></p>
 </li>
-<li><p>点选左上角的<code>Clone with commit-msg hook</code>按钮<br><em>错误示例：如果没有登陆你的LFID，你将看不到<code>Clone with commit-msg hook</code>按钮，只能看到anonymous http 命令<code>git clone https://gerrit.hyperledger.org/r/lf-sandbox</code>，匿名clone下来的项目在后面提交时会出现commit hook缺失的错误</em></p>
+<li><p>点选左上方的<code>Clone with commit-msg hook</code>按钮<br> <em>错误示例：如果没有登陆你的LFID，你将看不到 <code>Clone with commit-msg hook</code>按钮，只能看到 anonymous http 命令<code>git clone https://gerrit.hyperledger.org/r/lf-sandbox</code></em><br> <em>匿名clone下来的项目在后面提交时会出现commit hook缺失的错误</em></p>
 </li>
 <li><p>在按钮同一栏的右边，选择验证方式 ssh|http，并复制其下方的clone命令</p>
 <ul>
 <li>ssh验证：需要先生成本机的ssh pubkey文件，并在<a href="https://gerrit.hyperledger.org/的个人设置中将pubkey的内容加入列表中，才可以使用" target="_blank" rel="external">https://gerrit.hyperledger.org/的个人设置中将pubkey的内容加入列表中，才可以使用</a><br>好处：操作时不用交互输入密码<br>坏处：每台机器的pubkey都需要加入个人设置中，某些情况下会因为防火墙timeout  </li>
-<li>http验证（推荐）：<br>clone命令形如：<code>git clone https://&lt;LFID&gt;@gerrit.hyperledger.org/r/a/lf-sandbox &amp;&amp; (cd lf-sandbox &amp;&amp; curl -kLo</code>git rev-parse –git-dir<code>/hooks/commit-msg https://&lt;LFID&gt;@gerrit.hyperledger.org/r/tools/hooks/commit-msg; chmod +x</code>git rev-parse –git-dir<code>/hooks/commit-msg)</code></li>
+<li>http验证 <strong>推荐</strong>：<br>clone命令形如：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://&lt;LFID&gt;@gerrit.hyperledger.org/r/a/lf-sandbox &amp;&amp; (cd lf-sandbox &amp;&amp; curl -kLo `git rev-parse --git-dir`/hooks/commit-msg https://&lt;LFID&gt;@gerrit.hyperledger.org/r/tools/hooks/commit-msg; chmod +x `git rev-parse --git-dir`/hooks/commit-msg)</div></pre></td></tr></table></figure>
+</li>
 </ul>
-<ol>
-<li>选择一个父目录，执行刚才复制的clone命令，下载代码</li>
+</li>
+<li><p>选择一个父目录，执行刚才复制的clone命令，下载代码</p>
+</li>
 <li><p>创建一个branch，名字格式为 FAB-XXXX （issue序号）  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b FAB-XXXX</div></pre></td></tr></table></figure>
-<ol>
-<li>重命名远端为gerrit<br><em>否则在git review时会提示.gerrit文件不存在</em></li>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b FAB-XXXX</div></pre></td></tr></table></figure>
+</li>
+<li><p>重命名远端为gerrit: <code>$ git remote rename origin gerrit</code><br>   <em>否则在git review时会提示:</em></p>
+<blockquote>
+<p>No ‘.gitreview’ file found in this repository. We don’t know where your gerrit is. Please manually create a remote named gerrit and try again.</p>
+</blockquote>
+</li>
 <li>正式干活了，修复issue</li>
 <li>提交 ：<code>$git commit -a -s</code><br><em>-s 选项不能漏，因为是帮你在commit message中自动生成sign off签名的</em></li>
-</ol>
-</li>
 <li><p>git会进入你设置的文本编辑器里编辑commit message<br>message推荐以这种格式编写</p>
 <blockquote>
 <p>&lt;标题&gt;<br>This fix #FAB-XXXX<br>&lt;内容&gt;</p>
 </blockquote>
-<ol>
-<li><code>$ git rebase master</code><br><em>可能是为了生成channge-id</em><ol>
-<li>提交： <code>$ git review</code><br><em>gerrit不用push作为提交</em></li>
-</ol>
 </li>
-</ol>
+<li><p><code>$ git rebase master</code><br>   <em>可能是为了生成channge-id</em></p>
 </li>
-</ol>
-</li>
+<li>推出送申： <code>$ git review</code><br><em>gerrit不用 push作为推出</em></li>
 </ol>
 
       
