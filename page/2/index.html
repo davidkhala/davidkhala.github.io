@@ -261,7 +261,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/fabric-dimension/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/fabric-docker-tag-latest/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="davidLiu">
@@ -283,8 +283,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/09/04/fabric-dimension/" itemprop="url">
-                  fabric维度的思考
+                <a class="post-title-link" href="/2017/09/04/fabric-docker-tag-latest/" itemprop="url">
+                  hyperledger/fabric-peer:不存在tag:latest
                 </a>
               
             
@@ -300,7 +300,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-04T17:56:22+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-04T18:54:39+08:00">
                 2017-09-04
               </time>
             
@@ -319,9 +319,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/09/04/fabric-dimension/#comments" itemprop="discussionUrl">
+                <a href="/2017/09/04/fabric-docker-tag-latest/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/09/04/fabric-dimension/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/09/04/fabric-docker-tag-latest/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -348,21 +348,26 @@
       
         
           
-            <p>本文不是fabric推广文章，虽然会提及fabric的优点，但是更多想提醒各位fabric的局限性<br>本文不是技术入门文章，不会告诉你怎么学习fabric，也不会告诉你怎么使用fabric<br>本文也不是理念介绍文章，虽然会按照fabric的架构来讲，但是不会详解各个模块的功能和划分依据</p>
-<p>本文是关于以下几点</p>
-<ol>
-<li>拓展性：<ul>
-<li>哪些位置是fabric鼓励各位开发可以去拓展，构建自己的应用的</li>
-<li>哪些位置是fabric没有明说，但是在当前稳定版本下实践证明可以进行拓展的</li>
-<li>哪些位置是fabric不鼓励的操作，但是在某些版本下依然可以通过入侵式的方法做到的</li>
+            <p>latest标签，是docker image的默认标签</p>
+<p>官方文档：</p>
+<blockquote>
+<p>To download a particular image, or set of images (i.e., a repository), use docker pull. If no tag is provided, Docker Engine uses the :latest tag as a default.<br><a href="https://docs.docker.com/engine/reference/commandline/pull/#concurrent-downloads" target="_blank" rel="external">https://docs.docker.com/engine/reference/commandline/pull/#concurrent-downloads</a></p>
+</blockquote>
+<p>按照当前的分支标签策略，在docker hub的fabric的镜像标签列表中，确实不存在默认标签<br>所以如果直接用命令<code>$ docker pull image hyperledger/fabric-peer</code>，会出现默认标签不存在的问题。<br>但是为什么有的朋友没遇到这个问题呢，这就要怪鸡贼的fabric安装脚本了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 这里以1.0.2版本的脚本为例</div><div class="line">curl -sSL https://goo.gl/Gci9ZX | bash</div></pre></td></tr></table></figure>
+<blockquote>
+<p>脚本出处<br><a href="https://hyperledger-fabric.readthedocs.io/en/latest/samples.html#download-platform-specific-binaries" target="_blank" rel="external">https://hyperledger-fabric.readthedocs.io/en/latest/samples.html#download-platform-specific-binaries</a></p>
+</blockquote>
+<p>我们在浏览器打开<a href="https://goo.gl/Gci9ZX" target="_blank" rel="external">https://goo.gl/Gci9ZX</a><br>可以看到这么一段代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker tag hyperledger/fabric-$IMAGES:$FABRIC_TAG hyperledger/fabric-$IMAGES</div></pre></td></tr></table></figure></p>
+<p>这代码的作用就是将本来的以<code>$FABRIC_TAG</code>为标签的image，重命名为没有标签的版本<br>而没有标签，按照docker的规定，就是以latest为标签</p>
+<p>所以，脚本在docker pull image的过程当中，其实是有标签的，这个标签是<code>$FABRIC_TAG</code>，之后才将这个标签抹去</p>
+<p>我个人是非常不支持这个做法的，虽然有在之后的compose文件里面不需要再指定标签的好处，可是一旦出了docker image版本问题，会更难调试。  </p>
+<p>而这个情况往往出现在在同一台机器上试运行不同的fabric样例时，由于样例之间的更新进度参差不齐，开发人员一不留神，就会在一个项目里面调用了另外一个版本的fabric image导致奇怪的出错<br>而使这种情况更糟糕的是</p>
+<p><strong>你可能需要半个多小时才下载下来的image，为了切换到别的项目，不得不被删除，然后再用到的时候，又要等半个多小时</strong></p>
+<h3 id="更好的做法是"><a href="#更好的做法是" class="headerlink" title="更好的做法是"></a>更好的做法是</h3><ul>
+<li><strong>不要直接运行脚本，将脚本当中下载image的部分分离开来单独操作</strong></li>
+<li><strong>在每一个需要用到fabric docker image的地方，都显式注明所需要的版本标签</strong></li>
 </ul>
-</li>
-<li>开发效率瓶颈：<ul>
-<li>哪些位置是开发调试时特别需要小心的，由于区块链的不可逆性，一旦写入就没法撤销而导致的测试周期缓慢的<h1 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h1></li>
-</ul>
-</li>
-</ol>
-<h2 id="Docker-hub"><a href="#Docker-hub" class="headerlink" title="Docker hub"></a>Docker hub</h2><p>—— 未完待续—–</p>
 
           
         
@@ -401,7 +406,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -446,7 +451,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
