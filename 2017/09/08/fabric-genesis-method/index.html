@@ -97,7 +97,7 @@
 <meta property="og:site_name" content="金刚狼区块链十天征服你^-^">
 <meta property="og:description" content="之前有段时间在研究在channel中动态增加组织的方法，突发奇想想试下如果不在orderer中加genesisblock的环境参数会如何于是就顺带研究了下标题中的问题 引用官方文档：https://github.com/hyperledger/fabric/blob/master/sampleconfig/orderer.yaml  # Genesis method: The method by">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-08T04:04:49.859Z">
+<meta property="og:updated_time" content="2017-09-08T04:28:48.126Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ORDERER_GENERAL_GENESISMETHOD的两种模式">
 <meta name="twitter:description" content="之前有段时间在研究在channel中动态增加组织的方法，突发奇想想试下如果不在orderer中加genesisblock的环境参数会如何于是就顺带研究了下标题中的问题 引用官方文档：https://github.com/hyperledger/fabric/blob/master/sampleconfig/orderer.yaml  # Genesis method: The method by">
@@ -357,7 +357,10 @@
 <p>provisional模式需要配合另一个环境参数<code>ORDERER_GENERAL_GENESISPROFILE</code>使用<br><code>ORDERER_GENERAL_GENESISPROFILE</code>的取值只能是预定义的block profile集合当中选一个<br>如下是所有的集合元素</p>
 <ul>
 <li>SampleInsecureSolo</li>
-<li>SampleNoConsortium</li>
+<li>SampleNoConsortium<ul>
+<li><strong>警告</strong>  这个模式下orderer容器会无法启动，出现错误：<code>panic: No system chain found. If bootstrapping, does your system channel contain a consortiums group definition</code> </li>
+</ul>
+</li>
 <li>SampleInsecureKafka</li>
 <li>SampleDevModeSolo</li>
 <li>SampleSingleMSPSolo</li>

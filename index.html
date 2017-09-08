@@ -360,7 +360,10 @@
 <p>provisional模式需要配合另一个环境参数<code>ORDERER_GENERAL_GENESISPROFILE</code>使用<br><code>ORDERER_GENERAL_GENESISPROFILE</code>的取值只能是预定义的block profile集合当中选一个<br>如下是所有的集合元素</p>
 <ul>
 <li>SampleInsecureSolo</li>
-<li>SampleNoConsortium</li>
+<li>SampleNoConsortium<ul>
+<li><strong>警告</strong>  这个模式下orderer容器会无法启动，出现错误：<code>panic: No system chain found. If bootstrapping, does your system channel contain a consortiums group definition</code> </li>
+</ul>
+</li>
 <li>SampleInsecureKafka</li>
 <li>SampleDevModeSolo</li>
 <li>SampleSingleMSPSolo</li>
