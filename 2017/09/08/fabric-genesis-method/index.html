@@ -97,7 +97,7 @@
 <meta property="og:site_name" content="金刚狼区块链十天征服你^-^">
 <meta property="og:description" content="之前有段时间在研究在channel中动态增加组织的方法，突发奇想想试下如果不在orderer中加genesisblock的环境参数会如何于是就顺带研究了下标题中的问题 引用官方文档：https://github.com/hyperledger/fabric/blob/master/sampleconfig/orderer.yaml  # Genesis method: The method by">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-08T04:28:48.126Z">
+<meta property="og:updated_time" content="2017-09-08T05:03:35.857Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ORDERER_GENERAL_GENESISMETHOD的两种模式">
 <meta name="twitter:description" content="之前有段时间在研究在channel中动态增加组织的方法，突发奇想想试下如果不在orderer中加genesisblock的环境参数会如何于是就顺带研究了下标题中的问题 引用官方文档：https://github.com/hyperledger/fabric/blob/master/sampleconfig/orderer.yaml  # Genesis method: The method by">
@@ -367,7 +367,8 @@
 </ul>
 <p>各个类型解释<a href="https://github.com/hyperledger/fabric/blob/master/sampleconfig/configtx.yaml" target="_blank" rel="external">https://github.com/hyperledger/fabric/blob/master/sampleconfig/configtx.yaml</a></p>
 <p>综上: 对于初学者，如果没有特殊的配置要求，可以用内置的类型先创建起来，而又由于内置类型无法更改，正如provisional的字面意思“临时的”，所以只能是权宜之策，真正开发的时候还是需要file模式</p>
-<h2 id="file模式（推荐）"><a href="#file模式（推荐）" class="headerlink" title="file模式（推荐）"></a>file模式（推荐）</h2><p><code>ORDERER_GENERAL_GENESISMETHOD=file</code>之后<br>需要指定<code>ORDERER_GENERAL_GENESISFILE</code>作为orderer初始化时的block文件路径<br>注意这个路径是orderer容器内的路径不是宿主机的路径<br>若不指定，<code>ORDERER_GENERAL_GENESISFILE</code>的系统默认值是<br><code>/etc/hyperledger/fabric/genesisblock</code><br>而本地的block文件可以通过docker volumes挂载的办法同步到ORDERER_GENERAL_GENESISFILE所指定的位置，具体做法见仁见智</p>
+<h2 id="file模式（推荐）"><a href="#file模式（推荐）" class="headerlink" title="file模式（推荐）"></a>file模式（推荐）</h2><p><code>ORDERER_GENERAL_GENESISMETHOD=file</code>之后<br>需要指定<code>ORDERER_GENERAL_GENESISFILE</code>作为orderer初始化时的block文件路径<br>注意这个路径是orderer容器内的路径不是宿主机的路径<br>若不指定，<code>ORDERER_GENERAL_GENESISFILE</code>的系统默认值是<br><code>/etc/hyperledger/fabric/genesisblock</code><br>而本地的block文件可以通过docker volumes挂载的办法同步到ORDERER_GENERAL<em>GENESISFILE所指定的位置，具体做法见仁见智
+</em>因此如果不指定ORDERER_GENERAL<em>GENESISFILE又没有将block文件放到默认路径，orderer将由于找不到文件而无法启动</em></p>
 
       
     </div>
@@ -413,6 +414,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/14/fabric-batch-configtx/" rel="prev" title="configtx.yaml中两个参数AbsoluteMaxBytes， PreferredMaxBytes的分别">
+                configtx.yaml中两个参数AbsoluteMaxBytes， PreferredMaxBytes的分别 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -491,7 +496,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

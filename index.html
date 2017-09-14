@@ -261,7 +261,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/08/fabric-genesis-method/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/14/fabric-batch-configtx/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="davidLiu">
@@ -283,8 +283,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/09/08/fabric-genesis-method/" itemprop="url">
-                  ORDERER_GENERAL_GENESISMETHOD的两种模式
+                <a class="post-title-link" href="/2017/09/14/fabric-batch-configtx/" itemprop="url">
+                  configtx.yaml中两个参数AbsoluteMaxBytes， PreferredMaxBytes的分别
                 </a>
               
             
@@ -300,8 +300,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-08T11:05:44+08:00">
-                2017-09-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-14T13:04:30+08:00">
+                2017-09-14
               </time>
             
 
@@ -319,9 +319,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/09/08/fabric-genesis-method/#comments" itemprop="discussionUrl">
+                <a href="/2017/09/14/fabric-batch-configtx/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/09/08/fabric-genesis-method/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/09/14/fabric-batch-configtx/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -348,29 +348,20 @@
       
         
           
-            <p>之前有段时间在研究在channel中动态增加组织的方法，突发奇想想试下如果不在orderer中加genesisblock的环境参数会如何<br>于是就顺带研究了下标题中的问题</p>
-<p>引用官方文档：<a href="https://github.com/hyperledger/fabric/blob/master/sampleconfig/orderer.yaml" target="_blank" rel="external">https://github.com/hyperledger/fabric/blob/master/sampleconfig/orderer.yaml</a></p>
+            <p>今天一位朋友转发了这个文章<br>HyperLedger Fabric - HyperLedger Fabric 1.0的Transaction处理流程（分享自知乎网）<a href="https://zhuanlan.zhihu.com/p/27645101?utm_source=qq&amp;utm_medium=social" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/27645101?utm_source=qq&amp;utm_medium=social</a><br>其中关于orderer block打包的部分引起了我的兴趣</p>
 <blockquote>
-<p># Genesis method: The method by which the genesis block for the orderer system channel is specified. Available options are “provisional”, “file”:<br>#  - provisional: Utilizes a genesis profile, specified by GenesisProfile,to dynamically generate a new genesis block.<br>#  - file: Uses the file provided by GenesisFile as the genesis block.<br>GenesisMethod: provisional</p>
+<p>Orderer节点只是负责排序和打包工作，处理的结果是一个Batch的Transactions，也就是一个Block，这个Block的产生有两种情况，一种情况是Transaction很多，Block的大小达到了设定的大小，而另一种情况是Transaction很少，没有达到设定的大小，那么Orderer就会等，等到大小足够大或者超时时间。这些设置是在configtx.yaml中设定的。</p>
 </blockquote>
-<p>可知genesismethod有两种模式：provisional 和 file模式</p>
-<h2 id="provisional模式"><a href="#provisional模式" class="headerlink" title="provisional模式"></a>provisional模式</h2><p>这种模式利用系统预先定义的的genesisblock和预定义的block profile集合进行orderer初始化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// Select the bootstrapping mechanism</div><div class="line">	switch conf.General.GenesisMethod &#123;</div><div class="line">	case &quot;provisional&quot;:</div><div class="line">		genesisBlock = provisional.New(genesisconfig.Load(conf.General.GenesisProfile)).GenesisBlockForChannel(conf.General.SystemChannel)</div><div class="line">	case &quot;file&quot;:</div><div class="line">		genesisBlock = file.New(conf.General.GenesisFile).GenesisBlock()</div><div class="line">	default:</div><div class="line">		logger.Panic(&quot;Unknown genesis method:&quot;, conf.General.GenesisMethod)</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p>源码出处：    </p>
-<p><a href="https://github.com/hyperledger/fabric/blob/b81013d18b9c207b7fd3632c71b7b41b55ba02ee/orderer/common/server/main.go#L160" target="_blank" rel="external">https://github.com/hyperledger/fabric/blob/b81013d18b9c207b7fd3632c71b7b41b55ba02ee/orderer/common/server/main.go#L160</a></p>
-<p>provisional模式需要配合另一个环境参数<code>ORDERER_GENERAL_GENESISPROFILE</code>使用<br><code>ORDERER_GENERAL_GENESISPROFILE</code>的取值只能是预定义的block profile集合当中选一个<br>如下是所有的集合元素</p>
+<p>我去查阅了configtx可选的配置大全,但是依然有点疑惑<br><a href="https://github.com/hyperledger/fabric/blob/b29c935487867d78935e26c6a3014fd73bd781e1/sampleconfig/configtx.yaml#L185" target="_blank" rel="external">https://github.com/hyperledger/fabric/blob/b29c935487867d78935e26c6a3014fd73bd781e1/sampleconfig/configtx.yaml#L185</a><br>在这185行和191行中，两个参数文档看着有点相似，那他们到底有什么不同呢<br>答案在此<a href="https://jira.hyperledger.org/browse/FAB-1243" target="_blank" rel="external">https://jira.hyperledger.org/browse/FAB-1243</a></p>
+<p><strong>无论message池（未打包的交易）有多少数量，尽量让每个block 大小不超过PreferredMaxBytes。</strong>  </p>
 <ul>
-<li>SampleInsecureSolo</li>
-<li>SampleNoConsortium<ul>
-<li><strong>警告</strong>  这个模式下orderer容器会无法启动，出现错误：<code>panic: No system chain found. If bootstrapping, does your system channel contain a consortiums group definition</code> </li>
+<li>Cut blocks to no more than PreferredMaxBytes, regardless of number of messages.   </li>
 </ul>
-</li>
-<li>SampleInsecureKafka</li>
-<li>SampleDevModeSolo</li>
-<li>SampleSingleMSPSolo</li>
+<p><strong>如果单条message大小就已经超过了PreferredMaxBytes，那么他在不超过AbsoluteMaxBytes的前提下会被单独打包成一个block</strong>  </p>
+<ul>
+<li>Messages that exceed PreferredMaxBytes will result in a batch of 1 (just that message), as long as message does not exceed AbsoluteMaxBytes.</li>
 </ul>
-<p>各个类型解释<a href="https://github.com/hyperledger/fabric/blob/master/sampleconfig/configtx.yaml" target="_blank" rel="external">https://github.com/hyperledger/fabric/blob/master/sampleconfig/configtx.yaml</a></p>
-<p>综上: 对于初学者，如果没有特殊的配置要求，可以用内置的类型先创建起来，而又由于内置类型无法更改，正如provisional的字面意思“临时的”，所以只能是权宜之策，真正开发的时候还是需要file模式</p>
-<h2 id="file模式（推荐）"><a href="#file模式（推荐）" class="headerlink" title="file模式（推荐）"></a>file模式（推荐）</h2><p><code>ORDERER_GENERAL_GENESISMETHOD=file</code>之后<br>需要指定<code>ORDERER_GENERAL_GENESISFILE</code>作为orderer初始化时的block文件路径<br>注意这个路径是orderer容器内的路径不是宿主机的路径<br>若不指定，<code>ORDERER_GENERAL_GENESISFILE</code>的系统默认值是<br><code>/etc/hyperledger/fabric/genesisblock</code><br>而本地的block文件可以通过docker volumes挂载的办法同步到ORDERER_GENERAL_GENESISFILE所指定的位置，具体做法见仁见智</p>
+<p>伪代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">if(newTx.size&gt;PreferredMaxBytes)</div><div class="line">&#123;</div><div class="line">    if(newTx.size&lt;AbsoluteMaxBytes)&#123;</div><div class="line">        batch(txPool) // cut block</div><div class="line">        batch([newTx])</div><div class="line">    &#125;else&#123;</div><div class="line">        throw new Error(reject(&quot;bad request&quot;))</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;else&#123;</div><div class="line">    txPool=txPool.concat(newTx)</div><div class="line">    if(txPool.size&lt;MaxMessageCount)</div><div class="line">    &#123;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    else&#123;</div><div class="line">        batch(txPool)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
           
         
@@ -409,7 +400,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -454,7 +445,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
