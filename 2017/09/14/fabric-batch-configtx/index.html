@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="区块链,hyperledger,fabric," />
 
 
 
@@ -91,13 +91,14 @@
 
 
 <meta name="description" content="今天一位朋友转发了这个文章HyperLedger Fabric - HyperLedger Fabric 1.0的Transaction处理流程（分享自知乎网）https://zhuanlan.zhihu.com/p/27645101?utm_source=qq&amp;amp;utm_medium=social其中关于orderer block打包的部分引起了我的兴趣  Orderer节点只是负责排序和">
+<meta name="keywords" content="区块链,hyperledger,fabric">
 <meta property="og:type" content="article">
 <meta property="og:title" content="configtx.yaml中两个参数AbsoluteMaxBytes， PreferredMaxBytes的分别">
 <meta property="og:url" content="http://yoursite.com/2017/09/14/fabric-batch-configtx/index.html">
 <meta property="og:site_name" content="金刚狼区块链十天征服你^-^">
 <meta property="og:description" content="今天一位朋友转发了这个文章HyperLedger Fabric - HyperLedger Fabric 1.0的Transaction处理流程（分享自知乎网）https://zhuanlan.zhihu.com/p/27645101?utm_source=qq&amp;amp;utm_medium=social其中关于orderer block打包的部分引起了我的兴趣  Orderer节点只是负责排序和">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-14T05:33:01.935Z">
+<meta property="og:updated_time" content="2017-09-15T04:25:48.418Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="configtx.yaml中两个参数AbsoluteMaxBytes， PreferredMaxBytes的分别">
 <meta name="twitter:description" content="今天一位朋友转发了这个文章HyperLedger Fabric - HyperLedger Fabric 1.0的Transaction处理流程（分享自知乎网）https://zhuanlan.zhihu.com/p/27645101?utm_source=qq&amp;amp;utm_medium=social其中关于orderer block打包的部分引起了我的兴趣  Orderer节点只是负责排序和">
@@ -358,7 +359,7 @@
 <ul>
 <li>Messages that exceed PreferredMaxBytes will result in a batch of 1 (just that message), as long as message does not exceed AbsoluteMaxBytes.</li>
 </ul>
-<p>伪代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">if(newTx.size&gt;PreferredMaxBytes)</div><div class="line">&#123;</div><div class="line">    if(newTx.size&lt;AbsoluteMaxBytes)&#123;</div><div class="line">        batch(txPool) // cut block</div><div class="line">        batch([newTx])</div><div class="line">    &#125;else&#123;</div><div class="line">        throw new Error(reject(&quot;bad request&quot;))</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;else&#123;</div><div class="line">    txPool=txPool.concat(newTx)</div><div class="line">    if(txPool.size&lt;MaxMessageCount)</div><div class="line">    &#123;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    else&#123;</div><div class="line">        batch(txPool)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>伪代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">onTimeOut=()=&gt;&#123;</div><div class="line">    batch(txPool)</div><div class="line">    //next loop</div><div class="line">    setTimeOut(onTimeOut,BatchTimeOut)</div><div class="line">&#125;</div><div class="line">setTimeOut(onTimeOut,BatchTimeOut)</div><div class="line">...</div><div class="line">onNewTx=(newTx)=&gt;&#123;</div><div class="line"></div><div class="line">    if(newTx.size&gt;PreferredMaxBytes)</div><div class="line">        &#123;</div><div class="line">        if(newTx.size&lt;AbsoluteMaxBytes)&#123;</div><div class="line">            batch(txPool) // cut block</div><div class="line">            batch([newTx])</div><div class="line">        &#125;else&#123;</div><div class="line">            throw new Error(reject(&quot;bad request&quot;))</div><div class="line">        &#125;</div><div class="line">    </div><div class="line">    &#125;else&#123;</div><div class="line">        txPool=txPool.concat(newTx)</div><div class="line">        if(txPool.size&lt;MaxMessageCount)</div><div class="line">        &#123;</div><div class="line">        </div><div class="line">        &#125;</div><div class="line">        else&#123;</div><div class="line">            batch(txPool)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -385,6 +386,16 @@
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/区块链/" rel="tag"># 区块链</a>
+          
+            <a href="/tags/hyperledger/" rel="tag"># hyperledger</a>
+          
+            <a href="/tags/fabric/" rel="tag"># fabric</a>
+          
+        </div>
       
 
       
