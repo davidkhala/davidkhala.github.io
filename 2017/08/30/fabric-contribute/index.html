@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="davidliu技术分享">
 <meta property="og:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明，并一并感谢 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux f">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-13T09:45:21.996Z">
+<meta property="og:updated_time" content="2017-10-17T02:44:50.567Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何给Hyperledger-fabric贡献代码">
 <meta name="twitter:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明，并一并感谢 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux f">
@@ -389,7 +389,7 @@
 <li>提交 ：<code>$git commit -a -s</code><br><em>-s 选项不能漏，因为是帮你在commit message中自动生成sign off签名的</em></li>
 <li><p>git会进入你设置的文本编辑器里编辑commit message<br>message推荐以这种格式编写,这也是杨保华的《区块链原理、设计与应用》书中的格式</p>
 <blockquote>
-<p>[FAB-XXXX] &lt;标题&gt;<br>This fixes #FAB-XXXX<br>&lt;内容&gt;</p>
+<p>[FAB-XXXX] &lt;标题，本行不能超过55字符&gt;<br>This fixes #FAB-XXXX<br>&lt;内容&gt;</p>
 </blockquote>
 </li>
 <li><p>推出送申： <code>$ git review</code><br><em>gerrit不用 push作为推出</em></p>
