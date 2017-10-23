@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="davidliu技术分享">
 <meta property="og:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明，并一并感谢 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux f">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-23T03:57:37.428Z">
+<meta property="og:updated_time" content="2017-10-23T04:01:33.776Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何给Hyperledger-fabric贡献代码">
 <meta name="twitter:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明，并一并感谢 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux f">
@@ -399,13 +399,13 @@
 <ol>
 <li><p>添加审阅者Add Reviewer<br>一般都是添加一些活跃并具有影响力的大拿，比如BaohuaYang，Gari Signh，node-sdk的维护者Jim Zhang，核心机制维护Yacov Manevich<br>当然最有话语权的还是你所提交的目标仓库的维护者，务必是要邀请他加入审阅的<br><strong>审阅者列表在change页的中间位置</strong><br>等待审阅的时间可长可短，耐心等待个大拿们回复吧</p>
 </li>
-<li><p>修改提交<br>如果评审没有通过，即有Reviewer给你的提交评论并扣分了，则需要做进一步的修正</p>
+<li><p>修改提交<br>如果评审没有通过，即有Reviewer给你的patchSet评论并扣分了，则需要做进一步的修正</p>
 <blockquote>
 <p>修正过程跟第一次提交类似，唯一的不同是提交的时候不再使用$ git commit -a -s 而是 </p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git commit -a --amend</div></pre></td></tr></table></figure>
 </blockquote>
 </li>
-<li><p>合并<br>如果仓库维护者认可了你的patch，他会给你的提交加分并回复说你的patch将会被合并到主分支上</p>
+<li><p>合并<br>如果仓库维护者认可了你的patch，他会给你的最终patchSet加分并回复说你的change将会被合并到主分支上</p>
 </li>
 </ol>
 
