@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="davidliu技术分享">
 <meta property="og:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明，并一并感谢 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux f">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-17T02:44:50.567Z">
+<meta property="og:updated_time" content="2017-10-23T03:57:37.428Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何给Hyperledger-fabric贡献代码">
 <meta name="twitter:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明，并一并感谢 安装环境 git gerrit所需的组件：git-review，安装方法见 https://www.mediawiki.org/wiki/Gerrit/git-review  取得权限注册 Linux f">
@@ -354,7 +354,7 @@
 <h2 id="取得权限"><a href="#取得权限" class="headerlink" title="取得权限"></a>取得权限</h2><p>注册 Linux foundation ID，就是linux基金会的账号，简称为LFID </p>
 <p><em>gerrit基本不支持匿名操作</em></p>
 <h2 id="code-of-contributor贡献者守则"><a href="#code-of-contributor贡献者守则" class="headerlink" title="code of contributor贡献者守则"></a>code of contributor贡献者守则</h2><p>代码是为了修复jira上提出的issue的，如果是新功能，也要创造一个新issue去‘修复’<br>记下我们要修复的问题的序号，比如FAB-XXXX，我们后面会用到</p>
-<h2 id="获取代码"><a href="#获取代码" class="headerlink" title="获取代码"></a>获取代码</h2><ol>
+<h2 id="第一次提交流程"><a href="#第一次提交流程" class="headerlink" title="第一次提交流程"></a>第一次提交流程</h2><ol>
 <li>进入<a href="https://gerrit.hyperledger.org/，并登陆你的LFID" target="_blank" rel="external">https://gerrit.hyperledger.org/，并登陆你的LFID</a><br> <em>登陆入口在右上方，Search按钮下面有个‘Sign in’</em>  </li>
 <li><p>查看项目列表，找到对应项目，这里以 lf-sandbox 项目为例子<br> <em>lf-sandbox项目不是 fabric项目，而是官方推荐拿来学习 gerrit用的沙盒项目</em></p>
 </li>
@@ -393,6 +393,19 @@
 </blockquote>
 </li>
 <li><p>推出送申： <code>$ git review</code><br><em>gerrit不用 push作为推出</em></p>
+</li>
+</ol>
+<h2 id="代码评审和修改"><a href="#代码评审和修改" class="headerlink" title="代码评审和修改"></a>代码评审和修改</h2><p>提交成功之后，可以去gerrit。hyperledger.org/r/上查看自己最新提交的patchSet信息</p>
+<ol>
+<li><p>添加审阅者Add Reviewer<br>一般都是添加一些活跃并具有影响力的大拿，比如BaohuaYang，Gari Signh，node-sdk的维护者Jim Zhang，核心机制维护Yacov Manevich<br>当然最有话语权的还是你所提交的目标仓库的维护者，务必是要邀请他加入审阅的<br><strong>审阅者列表在change页的中间位置</strong><br>等待审阅的时间可长可短，耐心等待个大拿们回复吧</p>
+</li>
+<li><p>修改提交<br>如果评审没有通过，即有Reviewer给你的提交评论并扣分了，则需要做进一步的修正</p>
+<blockquote>
+<p>修正过程跟第一次提交类似，唯一的不同是提交的时候不再使用$ git commit -a -s 而是 </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git commit -a --amend</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>合并<br>如果仓库维护者认可了你的patch，他会给你的提交加分并回复说你的patch将会被合并到主分支上</p>
 </li>
 </ol>
 
@@ -620,7 +633,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装环境"><span class="nav-number">1.</span> <span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取得权限"><span class="nav-number">2.</span> <span class="nav-text">取得权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code-of-contributor贡献者守则"><span class="nav-number">3.</span> <span class="nav-text">code of contributor贡献者守则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取代码"><span class="nav-number">4.</span> <span class="nav-text">获取代码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装环境"><span class="nav-number">1.</span> <span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取得权限"><span class="nav-number">2.</span> <span class="nav-text">取得权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code-of-contributor贡献者守则"><span class="nav-number">3.</span> <span class="nav-text">code of contributor贡献者守则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一次提交流程"><span class="nav-number">4.</span> <span class="nav-text">第一次提交流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码评审和修改"><span class="nav-number">5.</span> <span class="nav-text">代码评审和修改</span></a></li></ol></div>
             
 
           </div>
