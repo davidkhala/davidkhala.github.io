@@ -90,17 +90,17 @@
 
 
 
-<meta name="description" content="与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java和同目录下的End2endIT也足够进行开发工作了">
+<meta name="description" content="与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java和同目录下的End2endIT也足够进行开发工作了 测试代码会在这里更新：https://github.com/dav">
 <meta property="og:type" content="article">
 <meta property="og:title" content="对比node-sdk，fabric-java-sdk开发e2e测试的一些注意点">
 <meta property="og:url" content="http://yoursite.com/2017/11/08/fabric-java-sdk-comment/index.html">
 <meta property="og:site_name" content="davidliu技术分享">
-<meta property="og:description" content="与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java和同目录下的End2endIT也足够进行开发工作了">
+<meta property="og:description" content="与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java和同目录下的End2endIT也足够进行开发工作了 测试代码会在这里更新：https://github.com/dav">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-08T08:59:57.757Z">
+<meta property="og:updated_time" content="2017-11-08T09:16:09.245Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对比node-sdk，fabric-java-sdk开发e2e测试的一些注意点">
-<meta name="twitter:description" content="与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java和同目录下的End2endIT也足够进行开发工作了">
+<meta name="twitter:description" content="与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java和同目录下的End2endIT也足够进行开发工作了 测试代码会在这里更新：https://github.com/dav">
 
 
 
@@ -346,7 +346,7 @@
 
       
         <p>与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读<br><code>../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java</code><br>和同目录下的<code>End2endIT</code>也足够进行开发工作了</p>
-<a id="more"></a>
+<p>测试代码会在这里更新：<a href="https://github.com/davidkhala/delphi-fabric/tree/master/JavaSDKTest" target="_blank" rel="external">https://github.com/davidkhala/delphi-fabric/tree/master/JavaSDKTest</a><br><a id="more"></a></p>
 <hr>
 <h3 id="name属性："><a href="#name属性：" class="headerlink" title="name属性："></a>name属性：</h3><p>相对于node-sdk里面的对象，很多java-sdk的对象，包括Peer，EventHub对象，都多了一个会进行检查的name属性，根据我观察，除了作为一个错误日志里的标签之外，没有别的用途</p>
 <h3 id="Client对象"><a href="#Client对象" class="headerlink" title="Client对象"></a>Client对象</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//获取Client对象的方法</div><div class="line">HFClient client = HFClient.createNewInstance();</div><div class="line">client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());//设CryptoSuite为默认的格式，对应node-sdk里面的BaseClient.newCryptoSuite()</div></pre></td></tr></table></figure>
@@ -357,7 +357,7 @@
 <h3 id="User对象"><a href="#User对象" class="headerlink" title="User对象"></a>User对象</h3><ul>
 <li>User对象是一个接口，其中需要实现的方法是各类getter，其中比较重要的除了name之外，还有<code>String MspId;</code>和<code>Enrollment enrollment;</code>  </li>
 <li><code>Enrollment</code>对象依然是个接口，用来保存PrivateKey和证书<code>String cert</code>的，在使用User之前请务必将enrollment设置正确。</li>
-<li>对于由<code>cryptogen</code>生成的目录接口来说，PrivateKey可以对应<code>msp/keystore</code>下面的*_sk文件，证书对应<code>msp/signcerts</code>下面的证书文件</li>
+<li>对于由<code>cryptogen</code>生成的目录结构来说，PrivateKey可以对应<code>msp/keystore</code>下面的*_sk文件，证书对应<code>msp/signcerts</code>下面的证书文件</li>
 <li><p>官方读取PrivateKey的方案:</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//通过sdk内置的Bouncy Castle库来导入的</div><div class="line">static PrivateKey getPrivateKeyFromBytes(byte[] data) throws IOException, NoSuchProviderException, NoSuchAlgorithmException, InvalidKeySpecException &#123;</div><div class="line">    final Reader pemReader = new StringReader(new String(data));</div><div class="line">    final PrivateKeyInfo pemPair;</div><div class="line">    PEMParser pemParser = new PEMParser(pemReader);</div><div class="line">    pemPair = (PrivateKeyInfo) pemParser.readObject();</div><div class="line"></div><div class="line">    return new JcaPEMKeyConverter().setProvider(BouncyCastleProvider.PROVIDER_NAME).getPrivateKey(pemPair);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
