@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="今天一位朋友转发了这个文章HyperLedger Fabric - HyperLedger Fabric 1.0的Transaction处理流程（分享自知乎网）https://zhuanlan.zhihu.com/p/27645101?utm_source=qq&amp;amp;utm_medium=social其中关于orderer block打包的部分引起了我的兴趣  Orderer节点只是负责排序和">
+<meta name="description" content="今天一位朋友转发了这个文章HyperLedger Fabric - HyperLedger Fabric 1.0的Transaction处理流程（分享自知乎网）https://zhuanlan.zhihu.com/p/27645101?utm_source=qq&amp;amp;utm_medium=social其中关于orderer block打包的部分引起了我的兴趣">
 <meta name="keywords" content="区块链,hyperledger,fabric">
 <meta property="og:type" content="article">
 <meta property="og:title" content="configtx.yaml中两个参数AbsoluteMaxBytes， PreferredMaxBytes的分别">
 <meta property="og:url" content="http://yoursite.com/2017/09/14/fabric-batch-configtx/index.html">
 <meta property="og:site_name" content="davidliu技术分享">
-<meta property="og:description" content="今天一位朋友转发了这个文章HyperLedger Fabric - HyperLedger Fabric 1.0的Transaction处理流程（分享自知乎网）https://zhuanlan.zhihu.com/p/27645101?utm_source=qq&amp;amp;utm_medium=social其中关于orderer block打包的部分引起了我的兴趣  Orderer节点只是负责排序和">
+<meta property="og:description" content="今天一位朋友转发了这个文章HyperLedger Fabric - HyperLedger Fabric 1.0的Transaction处理流程（分享自知乎网）https://zhuanlan.zhihu.com/p/27645101?utm_source=qq&amp;amp;utm_medium=social其中关于orderer block打包的部分引起了我的兴趣">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-15T04:25:48.418Z">
+<meta property="og:updated_time" content="2017-11-08T06:45:58.645Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="configtx.yaml中两个参数AbsoluteMaxBytes， PreferredMaxBytes的分别">
-<meta name="twitter:description" content="今天一位朋友转发了这个文章HyperLedger Fabric - HyperLedger Fabric 1.0的Transaction处理流程（分享自知乎网）https://zhuanlan.zhihu.com/p/27645101?utm_source=qq&amp;amp;utm_medium=social其中关于orderer block打包的部分引起了我的兴趣  Orderer节点只是负责排序和">
+<meta name="twitter:description" content="今天一位朋友转发了这个文章HyperLedger Fabric - HyperLedger Fabric 1.0的Transaction处理流程（分享自知乎网）https://zhuanlan.zhihu.com/p/27645101?utm_source=qq&amp;amp;utm_medium=social其中关于orderer block打包的部分引起了我的兴趣">
 
 
 
@@ -347,6 +347,7 @@
 
       
         <p>今天一位朋友转发了这个文章<br>HyperLedger Fabric - HyperLedger Fabric 1.0的Transaction处理流程（分享自知乎网）<a href="https://zhuanlan.zhihu.com/p/27645101?utm_source=qq&amp;utm_medium=social" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/27645101?utm_source=qq&amp;utm_medium=social</a><br>其中关于orderer block打包的部分引起了我的兴趣</p>
+<a id="more"></a>
 <blockquote>
 <p>Orderer节点只是负责排序和打包工作，处理的结果是一个Batch的Transactions，也就是一个Block，这个Block的产生有两种情况，一种情况是Transaction很多，Block的大小达到了设定的大小，而另一种情况是Transaction很少，没有达到设定的大小，那么Orderer就会等，等到大小足够大或者超时时间。这些设置是在configtx.yaml中设定的。</p>
 </blockquote>
@@ -488,7 +489,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

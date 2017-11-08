@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="区块链,hyperledger,fabric,fabric-node-sdk," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -90,18 +90,17 @@
 
 
 
-<meta name="description" content="最近我提交了一个patch，遭到了Hyperledger Jobbuilder的反复’拒绝’。在此想分享一下拒绝原因">
-<meta name="keywords" content="区块链,hyperledger,fabric,fabric-node-sdk">
+<meta name="description" content="与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java和同目录下的End2endIT也足够进行开发工作了">
 <meta property="og:type" content="article">
-<meta property="og:title" content="fabric-node-sdk Jobbuilder的一些格式限制">
-<meta property="og:url" content="http://yoursite.com/2017/10/26/fabric-node-sdk-jobbuilder/index.html">
+<meta property="og:title" content="对比node-sdk，fabric-java-sdk开发e2e测试的一些注意点">
+<meta property="og:url" content="http://yoursite.com/2017/11/08/fabric-java-sdk-comment/index.html">
 <meta property="og:site_name" content="davidliu技术分享">
-<meta property="og:description" content="最近我提交了一个patch，遭到了Hyperledger Jobbuilder的反复’拒绝’。在此想分享一下拒绝原因">
+<meta property="og:description" content="与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java和同目录下的End2endIT也足够进行开发工作了">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-08T06:46:47.277Z">
+<meta property="og:updated_time" content="2017-11-08T08:59:57.757Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="fabric-node-sdk Jobbuilder的一些格式限制">
-<meta name="twitter:description" content="最近我提交了一个patch，遭到了Hyperledger Jobbuilder的反复’拒绝’。在此想分享一下拒绝原因">
+<meta name="twitter:title" content="对比node-sdk，fabric-java-sdk开发e2e测试的一些注意点">
+<meta name="twitter:description" content="与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java和同目录下的End2endIT也足够进行开发工作了">
 
 
 
@@ -129,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/26/fabric-node-sdk-jobbuilder/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/11/08/fabric-java-sdk-comment/"/>
 
 
 
 
 
-  <title> fabric-node-sdk Jobbuilder的一些格式限制 | davidliu技术分享 </title>
+  <title> 对比node-sdk，fabric-java-sdk开发e2e测试的一些注意点 | davidliu技术分享 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -264,7 +263,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/26/fabric-node-sdk-jobbuilder/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/08/fabric-java-sdk-comment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="davidLiu">
@@ -285,7 +284,7 @@
             
             
               
-                fabric-node-sdk Jobbuilder的一些格式限制
+                对比node-sdk，fabric-java-sdk开发e2e测试的一些注意点
               
             
           </h1>
@@ -300,8 +299,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-26T09:40:58+08:00">
-                2017-10-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-08T14:48:07+08:00">
+                2017-11-08
               </time>
             
 
@@ -319,9 +318,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/10/26/fabric-node-sdk-jobbuilder/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/08/fabric-java-sdk-comment/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/10/26/fabric-node-sdk-jobbuilder/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/08/fabric-java-sdk-comment/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -346,11 +345,54 @@
       
 
       
-        <p>最近我提交了一个patch，遭到了Hyperledger Jobbuilder的反复’拒绝’。在此想分享一下拒绝原因</p>
+        <p>与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读<br><code>../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java</code><br>和同目录下的<code>End2endIT</code>也足够进行开发工作了</p>
 <a id="more"></a>
-<h2 id="JS-doc"><a href="#JS-doc" class="headerlink" title="JS doc"></a>JS doc</h2><ul>
-<li>单行不能超过150字符</li>
-<li>我最终成功的jsdoc格式： <code>@property {boolean} skipPersistence - whether to save this new user object into persistence.</code>注意，‘whether’前面的hyphen不能省略！</li>
+<hr>
+<h3 id="name属性："><a href="#name属性：" class="headerlink" title="name属性："></a>name属性：</h3><p>相对于node-sdk里面的对象，很多java-sdk的对象，包括Peer，EventHub对象，都多了一个会进行检查的name属性，根据我观察，除了作为一个错误日志里的标签之外，没有别的用途</p>
+<h3 id="Client对象"><a href="#Client对象" class="headerlink" title="Client对象"></a>Client对象</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//获取Client对象的方法</div><div class="line">HFClient client = HFClient.createNewInstance();</div><div class="line">client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());//设CryptoSuite为默认的格式，对应node-sdk里面的BaseClient.newCryptoSuite()</div></pre></td></tr></table></figure>
+<ul>
+<li>由于Channel和Client的紧密关系，经常需要在用Channe时获取它蕴含的Client对象，我自己准备了一个静态方法通过反射机制来获取它 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public static HFClient getClient(Channel channel) throws NoSuchFieldException, IllegalAccessException &#123;</div><div class="line">        Field f = Channel.class.getDeclaredField(&quot;client&quot;); //NoSuchFieldException</div><div class="line">        f.setAccessible(true);</div><div class="line">        return (HFClient) f.get(channel);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="User对象"><a href="#User对象" class="headerlink" title="User对象"></a>User对象</h3><ul>
+<li>User对象是一个接口，其中需要实现的方法是各类getter，其中比较重要的除了name之外，还有<code>String MspId;</code>和<code>Enrollment enrollment;</code>  </li>
+<li><code>Enrollment</code>对象依然是个接口，用来保存PrivateKey和证书<code>String cert</code>的，在使用User之前请务必将enrollment设置正确。</li>
+<li>对于由<code>cryptogen</code>生成的目录接口来说，PrivateKey可以对应<code>msp/keystore</code>下面的*_sk文件，证书对应<code>msp/signcerts</code>下面的证书文件</li>
+<li><p>官方读取PrivateKey的方案:</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//通过sdk内置的Bouncy Castle库来导入的</div><div class="line">static PrivateKey getPrivateKeyFromBytes(byte[] data) throws IOException, NoSuchProviderException, NoSuchAlgorithmException, InvalidKeySpecException &#123;</div><div class="line">    final Reader pemReader = new StringReader(new String(data));</div><div class="line">    final PrivateKeyInfo pemPair;</div><div class="line">    PEMParser pemParser = new PEMParser(pemReader);</div><div class="line">    pemPair = (PrivateKeyInfo) pemParser.readObject();</div><div class="line"></div><div class="line">    return new JcaPEMKeyConverter().setProvider(BouncyCastleProvider.PROVIDER_NAME).getPrivateKey(pemPair);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>同样的，User对象准备好之后将其设到Client里<code>client.setUserContext(user)</code></p>
+</li>
+</ul>
+<h2 id="Channel对象"><a href="#Channel对象" class="headerlink" title="Channel对象"></a>Channel对象</h2><p>由于channel的工厂构造方法和构造器都是包私有的，我们一般通过<code>client.newChannel(...)</code>来获取channel对象。该方法有两个重载</p>
+<ul>
+<li><code>newChannel(String name)</code> 不会造成实际的影响，单纯只是新建一个对象<ul>
+<li>相当于Client.js里的<code>newChannel(name)</code>，通常用于当channel已经在fabric网络上存在的时候</li>
+</ul>
+</li>
+<li><code>newChannel(String name, Orderer orderer, ChannelConfiguration channelConfiguration, byte[]... channelConfigurationSignatures)</code><ul>
+<li>相当于Client.js里面的<code>createChannel(request)</code>，向Orderer发出请求去创建channel</li>
+<li><code>channelConfiguration</code>通过<code>new ChannelConfiguration(channelFile)</code>生成</li>
+<li><code>channelConfigurationSignatures</code>可以通过<code>client.getChannelConfigurationSignature(channelConfiguration, client.getUserContext())</code>生成</li>
+</ul>
+</li>
+<li>无论通过哪种方式生成，都可以在之后执行<code>channel.initialize()</code><ul>
+<li>由于在java-sdk中，EventHub的<code>connect()</code>方法是包私有的，而调用它的唯一公有方法是channel.initialize，因此eventHub不能像node-sdk那样独立操作，而必须先通过<code>channel.addEventHub(eventHub)</code>添加到channel，然后再次运行channel.initialize，才可以让这些eventHub启动</li>
+</ul>
+</li>
+</ul>
+<h3 id="Chaincode"><a href="#Chaincode" class="headerlink" title="Chaincode"></a>Chaincode</h3><p>无论是install还是instantiate，在对应的ProposalRequest里都会需要<code>setChaincodeID(chaincodeID)</code>，但是要注意: chaincodeID是一个ChaincodeID类的对象而不是String，而它除了chaincodeName之外还包括version，path这两个信息，这与node-sdk中的chaincodeID == chaincodeName语义不同,<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ChaincodeID chaincodeID = ChaincodeID.newBuilder().setName(ccName).setVersion(ccVersion).setPath(ccPath).build();</div></pre></td></tr></table></figure></p>
+<ul>
+<li>transientMap必须非null，否则会报错<br><code>instantiateProposalRequest.setTransientMap(new HashMap&lt;&gt;())</code></li>
+<li>对于instantiate和invoke来说，第一段提交Proposal之后需要通过<code>channel.sendTransaction(successResponses)</code>进行第二段提交，<ul>
+<li>其中successResponses为第一段提交返回结果当中，getStatus() == Success的部分</li>
+<li>第二段提交会返回一个CompletableFuture<transactionevent>结果<code>future</code>，如果之前在channel当中正确设置了eventHub，执行成功的交易可以直接通过<code>BlockEvent.TransactionEvent successEvent = future.get()</code>取出来。这点相比node-sdk提供了更多的方便，因为node-sdk好像只提供了eventHub注册监听器的方式获得时间<ul>
+<li>如果eventHub没有设置好，那么程序会一直等待get()方法返回</li>
+<li>java-sdk也支持注册监听器的方法来获取更多的事件内容，详情见<code>channel.registerBlockListener(blockEvent-&gt;{...})</code>方法</li>
+</ul>
+</transactionevent></li>
+</ul>
+</li>
 </ul>
 
       
@@ -379,18 +421,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/区块链/" rel="tag"># 区块链</a>
-          
-            <a href="/tags/hyperledger/" rel="tag"># hyperledger</a>
-          
-            <a href="/tags/fabric/" rel="tag"># fabric</a>
-          
-            <a href="/tags/fabric-node-sdk/" rel="tag"># fabric-node-sdk</a>
-          
-        </div>
-      
 
       
         
@@ -400,8 +430,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/14/fabric-batch-configtx/" rel="next" title="configtx.yaml中两个参数AbsoluteMaxBytes， PreferredMaxBytes的分别">
-                <i class="fa fa-chevron-left"></i> configtx.yaml中两个参数AbsoluteMaxBytes， PreferredMaxBytes的分别
+              <a href="/2017/11/07/fabric-node-sdk-code-style/" rel="next" title="fabric-node-sdk鲜为人知的代码规范要求">
+                <i class="fa fa-chevron-left"></i> fabric-node-sdk鲜为人知的代码规范要求
               </a>
             
           </div>
@@ -409,10 +439,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/29/android-typeface/" rel="prev" title="Android中通过typeface设置字体">
-                Android中通过typeface设置字体 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -577,7 +603,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS-doc"><span class="nav-number">1.</span> <span class="nav-text">JS doc</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#name属性："><span class="nav-number">1.</span> <span class="nav-text">name属性：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client对象"><span class="nav-number">2.</span> <span class="nav-text">Client对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#User对象"><span class="nav-number">3.</span> <span class="nav-text">User对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Channel对象"><span class="nav-number"></span> <span class="nav-text">Channel对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Chaincode"><span class="nav-number">1.</span> <span class="nav-text">Chaincode</span></a></li></ol></div>
             
 
           </div>
@@ -720,9 +746,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2017/10/26/fabric-node-sdk-jobbuilder/';
-          this.page.identifier = '2017/10/26/fabric-node-sdk-jobbuilder/';
-          this.page.title = 'fabric-node-sdk Jobbuilder的一些格式限制';
+          this.page.url = 'http://yoursite.com/2017/11/08/fabric-java-sdk-comment/';
+          this.page.identifier = '2017/11/08/fabric-java-sdk-comment/';
+          this.page.title = '对比node-sdk，fabric-java-sdk开发e2e测试的一些注意点';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://davidkhala.disqus.com/embed.js';
