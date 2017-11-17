@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="davidliu技术分享">
 <meta property="og:description" content="在跟Jim Zhang用patch交流的过程中，他提到了一些代码规范的点，在此总结一下">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-08T06:46:53.769Z">
+<meta property="og:updated_time" content="2017-11-10T04:04:58.499Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="fabric-node-sdk鲜为人知的代码规范要求">
 <meta name="twitter:description" content="在跟Jim Zhang用patch交流的过程中，他提到了一些代码规范的点，在此总结一下">
@@ -351,6 +351,11 @@
 <li>语句最后要以‘;’结尾</li>
 <li>不要使用fs.readFileSync(??这点有待商榷)</li>
 <li>不要遗留空代码行</li>
+<li>自动化测试无法通过的语法包括：<ul>
+<li>使用解构赋值（destructuring assignment）语法，如const {username,mspid} = opts</li>
+<li>使用箭头函数如()=&gt;{}</li>
+</ul>
+</li>
 </ul>
 
       

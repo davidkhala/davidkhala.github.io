@@ -97,7 +97,7 @@
 <meta property="og:site_name" content="davidliu技术分享">
 <meta property="og:description" content="与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java和同目录下的End2endIT也足够进行开发工作了 测试代码会在这里更新：https://github.com/dav">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-08T09:16:09.245Z">
+<meta property="og:updated_time" content="2017-11-17T07:29:03.940Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对比node-sdk，fabric-java-sdk开发e2e测试的一些注意点">
 <meta name="twitter:description" content="与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java和同目录下的End2endIT也足够进行开发工作了 测试代码会在这里更新：https://github.com/dav">
@@ -346,7 +346,10 @@
 
       
         <p>与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读<br><code>../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java</code><br>和同目录下的<code>End2endIT</code>也足够进行开发工作了</p>
-<p>测试代码会在这里更新：<a href="https://github.com/davidkhala/delphi-fabric/tree/master/JavaSDKTest" target="_blank" rel="external">https://github.com/davidkhala/delphi-fabric/tree/master/JavaSDKTest</a><br><a id="more"></a></p>
+<p>测试代码会在这里更新：<a href="https://github.com/davidkhala/delphi-fabric/tree/master/java" target="_blank" rel="external">https://github.com/davidkhala/delphi-fabric/tree/master/java</a><br><a id="more"></a></p>
+<ul>
+<li>目前java-sdk的tags最新只到1.0.1，远远赶不上node-sdk的进度，因此在使用时注意检查fabric容器的版本与sdk的版本是否一致</li>
+</ul>
 <hr>
 <h3 id="name属性："><a href="#name属性：" class="headerlink" title="name属性："></a>name属性：</h3><p>相对于node-sdk里面的对象，很多java-sdk的对象，包括Peer，EventHub对象，都多了一个会进行检查的name属性，根据我观察，除了作为一个错误日志里的标签之外，没有别的用途</p>
 <h3 id="Client对象"><a href="#Client对象" class="headerlink" title="Client对象"></a>Client对象</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//获取Client对象的方法</div><div class="line">HFClient client = HFClient.createNewInstance();</div><div class="line">client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());//设CryptoSuite为默认的格式，对应node-sdk里面的BaseClient.newCryptoSuite()</div></pre></td></tr></table></figure>
