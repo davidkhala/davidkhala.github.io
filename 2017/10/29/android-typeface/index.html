@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="davidliu技术分享">
 <meta property="og:description" content="今天整理过去的笔记时，发现之前我记录了一个关于android typeface字体设置的辟谣笔记这里分享出来">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-08T06:45:49.790Z">
+<meta property="og:updated_time" content="2018-01-10T06:19:53.997Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android中通过typeface设置字体">
 <meta name="twitter:description" content="今天整理过去的笔记时，发现之前我记录了一个关于android typeface字体设置的辟谣笔记这里分享出来">
@@ -354,6 +354,24 @@
 </blockquote>
 <p>经过测试发现，fonts目录并不是关键字，直接放在asset根目录里面也是一样可以的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Typefacecustom_font=Typeface.createFromAsset(getAssets(),&quot;enter_the_grid.ttf&quot;);</div></pre></td></tr></table></figure></p>
 <p>这样就足够了</p>
+<hr>
+<h2 id="PS-喜报-Oreo开始终于支持将字体文件作为资源放置在res目录下"><a href="#PS-喜报-Oreo开始终于支持将字体文件作为资源放置在res目录下" class="headerlink" title="PS 喜报 Oreo开始终于支持将字体文件作为资源放置在res目录下"></a>PS 喜报 Oreo开始终于支持将字体文件作为资源放置在res目录下</h2><blockquote>
+<p>Android 8.0 (API level 26) introduces a new feature, Fonts in XML, which lets you use fonts as resources. </p>
+</blockquote>
+<p>来自 <a href="https://developer.android.com/guide/topics/ui/look-and-feel/fonts-in-xml.html" target="_blank" rel="external">https://developer.android.com/guide/topics/ui/look-and-feel/fonts-in-xml.html</a> </p>
+<hr>
+<h2 id="彩蛋：当EditText的InputType属于password大类时，无法给EditText设置字体"><a href="#彩蛋：当EditText的InputType属于password大类时，无法给EditText设置字体" class="headerlink" title="彩蛋：当EditText的InputType属于password大类时，无法给EditText设置字体"></a>彩蛋：当EditText的InputType属于password大类时，无法给EditText设置字体</h2><p>password的变体包括：</p>
+<ul>
+<li>textPassword</li>
+<li>numberPassword</li>
+<li>textVisiblePassword</li>
+<li>textWebPassword</li>
+</ul>
+<p>以上4种变体，<strong>除了textVisiblePassword之外</strong>，都是无法通过android:fontFamily或者其他方式设置字体的</p>
+<blockquote>
+<p>为什么要给被覆盖了的密码输入框设置字体呢？</p>
+</blockquote>
+<p>因为，像<code>android.support.design.widget.TextInputLayout</code>这类的输入框装饰器里，浮动提示或者placeholder型提示是可见的，意味着还是有空间让特定字体去发挥的。</p>
 
       
     </div>
@@ -462,8 +480,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/avatar.jpeg"
@@ -555,6 +582,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PS-喜报-Oreo开始终于支持将字体文件作为资源放置在res目录下"><span class="nav-number">1.</span> <span class="nav-text">PS 喜报 Oreo开始终于支持将字体文件作为资源放置在res目录下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#彩蛋：当EditText的InputType属于password大类时，无法给EditText设置字体"><span class="nav-number">2.</span> <span class="nav-text">彩蛋：当EditText的InputType属于password大类时，无法给EditText设置字体</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -571,7 +614,7 @@
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
