@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="davidliu技术分享">
 <meta property="og:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明，并一并感谢">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-08T06:46:05.943Z">
+<meta property="og:updated_time" content="2018-02-08T03:59:57.733Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何给Hyperledger-fabric贡献代码">
 <meta name="twitter:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明，并一并感谢">
@@ -370,7 +370,7 @@
 </li>
 <li><p>选择一个父目录，执行刚才复制的clone命令，下载代码</p>
 </li>
-<li><strong>更新</strong> 重命名远端 <code>$ git remote rename origin gerrit</code><br> 在执行 <code>$ git review --setup</code>时，由于的确没有.gitreview文件，因此一定会出现_<blockquote>
+<li><strong>更新</strong> 重命名远端 <code>$ git remote rename origin gerrit</code><br> 如果没重命名，那么后面在执行 <code>$ git review --setup</code>时，由于的确没有.gitreview文件，因此一定会出现_<blockquote>
 <p>No ‘.gitreview’ file found in this repository. We don’t know where your gerrit is. Please manually create a remote named gerrit and try again.  </p>
 </blockquote>
 </li>
@@ -390,16 +390,39 @@
 <li>提交 ：<code>$git commit -a -s</code><br><em>-s 选项不能漏，因为是帮你在commit message中自动生成sign off签名的</em></li>
 <li><p>git会进入你设置的文本编辑器里编辑commit message<br>message推荐以这种格式编写,这也是杨保华的《区块链原理、设计与应用》书中的格式</p>
 <blockquote>
-<p>[FAB-XXXX] &lt;标题，本行不能超过55字符&gt;<br>This fixes #FAB-XXXX<br>&lt;内容&gt;</p>
+<p>[FAB-XXXX] &lt;标题,官方文档说本行不能超过72个字符，实测不能超过55个字符&gt;<br>&lt;空行&gt;<br>This fixes #FAB-XXXX<br>&lt;内容：每行不超过80字符，其中应该包括</p>
+<pre><code>- 你的提交做了什么？
+- 为何选用这种方式去进行改动
+- 为何这种改动能够成功，比如提交你成功的代码测试结果
+</code></pre><p>&gt;</p>
 </blockquote>
 </li>
 <li><p>推出送申： <code>$ git review</code><br><em>gerrit不用 push作为推出</em></p>
 </li>
 </ol>
-<h2 id="代码评审和修改"><a href="#代码评审和修改" class="headerlink" title="代码评审和修改"></a>代码评审和修改</h2><p>提交成功之后，可以去gerrit。hyperledger.org/r/上查看自己最新提交的patchSet信息</p>
+<h2 id="代码评审和修改"><a href="#代码评审和修改" class="headerlink" title="代码评审和修改"></a>代码评审和修改</h2><p>提交成功之后，可以去gerrit.hyperledger.org/r/上查看自己最新提交的patchSet信息</p>
 <ol>
-<li><p>添加审阅者Add Reviewer<br>一般都是添加一些活跃并具有影响力的大拿，比如BaohuaYang，Gari Signh，node-sdk的维护者Jim Zhang，核心机制维护Yacov Manevich<br>当然最有话语权的还是你所提交的目标仓库的维护者，务必是要邀请他加入审阅的<br><strong>审阅者列表在change页的中间位置</strong><br>等待审阅的时间可长可短，耐心等待个大拿们回复吧</p>
+<li>检查你的变更请求Change Request(CR)是否通过了Hyperledger JobBuilder检测<br>为了确保代码的稳定性，官方基于Jenkins设立了一套持续集成（CI）流程。这套流程会在每次patchSet被推出之后，尝试在各种平台上运行测试。<br>贡献者有责任去保证自己的代码能供通过这些测试<br>测试通过后JobBuilder会自动给你的变更投票 +1，否则则会投 -1<br><strong>注意，有的时候CI流程会因为莫名的原因而出错，所以你需要去看log来确保不是自己的锅。如果确实跟你无关，你可以通过在你的CR页面上回复’reverify’来重启CI流程</strong><ul>
+<li>关于CI流程的更细节信息详见：<a href="https://github.com/hyperledger/ci-management/blob/master/docs/fabric_ci_process.md" target="_blank" rel="external">https://github.com/hyperledger/ci-management/blob/master/docs/fabric_ci_process.md</a></li>
+</ul>
 </li>
+</ol>
+<ul>
+<li>号外:@rameshthoomu 提供了专属node-sdk的更原子化的reverify关键字，回复其中一个可以单独重启某个CI子过程。<br>这样只需要重启错误的那一两个子过程，而不是重启整个CI，来加速验证迭代<ul>
+<li>(Triggers node8 jobs on x and z platforms)<br><code>reverify-node8x</code>,<code>reverify-node8z</code></li>
+<li>(Triggers node6 jobs on x and z platforms)<br><code>reverify-node6x</code>,<code>reverify-node6z</code></li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>添加审阅者Add Reviewer<br>一般都是添加一些活跃并具有影响力的大拿，比如BaohuaYang，Gari Signh，node-sdk的维护者Jim Zhang，核心机制维护Yacov Manevich<br>当然最有话语权的还是你所提交的目标仓库的维护者，务必是要邀请他加入审阅的，只有维护者才有权限对你的patch进行merge</li>
+</ol>
+<ul>
+<li>如何找到维护者：以node-sdk为例 维护者列表在：<a href="https://github.com/hyperledger/fabric-sdk-node/blob/master/MAINTAINERS.md" target="_blank" rel="external">https://github.com/hyperledger/fabric-sdk-node/blob/master/MAINTAINERS.md</a></li>
+<li>如何快速联系维护者：在rocketChat的PR专属频道发布关于你变更的消息 #fabric-pr-review</li>
+</ul>
+<p><strong>审阅者列表在change页的中间位置</strong></p>
+<ol>
 <li><p>修改提交<br>如果评审没有通过，即有Reviewer给你的patchSet评论并扣分了，则需要做进一步的修正</p>
 <blockquote>
 <p>修正过程跟第一次提交类似，在当前的branch：FAB-XXXX里面修改好之后，提交时不再使用$ git commit -a -s 而是 </p>
