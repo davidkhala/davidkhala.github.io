@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="davidliu技术分享">
 <meta property="og:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明，并一并感谢">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-14T03:24:11.823Z">
+<meta property="og:updated_time" content="2018-05-15T00:38:36.065Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何给Hyperledger-fabric贡献代码">
 <meta name="twitter:description" content="本文整理了刘文亮的指引，仅作为对https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html的补充说明，并一并感谢">
@@ -370,17 +370,9 @@
 </li>
 <li><p>选择一个父目录，执行刚才复制的clone命令，下载代码</p>
 </li>
-<li><strong>更新</strong> 重命名远端 <code>$ git remote rename origin gerrit</code><br> 如果没重命名，那么后面在执行 <code>$ git review --setup</code>时，由于的确没有.gitreview文件，因此一定会出现_<blockquote>
+<li>重命名远端 <code>$ git remote rename origin gerrit</code><br> 如果没重命名，那么后面在执行 <code>$ git review --setup</code>时，由于的确没有.gitreview文件，因此一定会出现_<blockquote>
 <p>No ‘.gitreview’ file found in this repository. We don’t know where your gerrit is. Please manually create a remote named gerrit and try again.  </p>
 </blockquote>
-</li>
-<li><strong>更新</strong> 初始化gerrit：<code>$ git review --setup</code><br>--setup，代表只初始化仓库但不提交 <em>Just run the repo setup commands but don’t submit anything</em>  <ul>
-<li>初始化时的工作包括（参见<a href="https://www.mediawiki.org/wiki/Gerrit/git-review#Setting_up_git-review）" target="_blank" rel="external">https://www.mediawiki.org/wiki/Gerrit/git-review#Setting_up_git-review）</a><blockquote>
-<p>测试远端仓库连通性，若失败，会要求输入一个gerrit用户名，输入LFID即可<br>创建一个名为“gerrit”的远端并引向它<br>安装commit-msg hook</p>
-</blockquote>
-</li>
-<li>若跳过此部，在后面第一次运行git review时<code>git review --setup</code>仍然会被自动运行一次，但是<strong>在clone之后紧接着运行一次</strong>是推荐的最佳实践</li>
-</ul>
 </li>
 <li><p>创建一个branch，名字格式为 FAB-XXXX （issue序号）  </p>
    <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b FAB-XXXX</div></pre></td></tr></table></figure>
@@ -433,6 +425,27 @@
 </blockquote>
 </li>
 <li><p>合并<br>如果仓库维护者认可了你的patch，他会给你的最终patchSet加分并回复说你的change将会被合并到主分支上</p>
+</li>
+</ol>
+<h2 id="与别人协作"><a href="#与别人协作" class="headerlink" title="与别人协作"></a>与别人协作</h2><p>感谢Dave Enyeart的提醒</p>
+<blockquote>
+<p>Simply reach out to the initial contributor either via rocket.chat or gerrit review or jira to coordinate, and then you can Checkout the latest patch under gerrit Download link, make your updates, <code>git commit -s --amend</code> to update and sign the commit, then push as normal.</p>
+</blockquote>
+<ol>
+<li>出于礼貌，先跟原作者通过rocketChat，gerrit review或者jira issue的方式联系沟通，表达你愿意在他的CR做进一步修改的意愿。</li>
+<li><p>在patch页面的右上角，账户名字的左下方，你能看到一个名为 Download 的下拉菜单，复制运行它所提供的Checkout命令，如:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git fetch https://davidkhala@gerrit.hyperledger.org/r/a/fabric-sdk-node refs/changes/09/11609/2 &amp;&amp; git checkout FETCH_HEAD</div></pre></td></tr></table></figure>
+<p>运行后，branch就会下载到你本机上</p>
+</li>
+<li><p>下载后，当前的仓库会处于一个 detached head上，为了方便管理，应该在这个head上创建一个branch（同上）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b FAB-XXXX</div></pre></td></tr></table></figure>
+</li>
+<li><p>在branch FAB-XXXX上进行修改</p>
+</li>
+<li><p>提交时使用修改提交模式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git commit -a --amend -s</div></pre></td></tr></table></figure>
+</li>
+<li><p>推出方式同上 $ git review</p>
 </li>
 </ol>
 
@@ -574,7 +587,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -660,7 +673,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装环境"><span class="nav-number">1.</span> <span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取得权限"><span class="nav-number">2.</span> <span class="nav-text">取得权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code-of-contributor贡献者守则"><span class="nav-number">3.</span> <span class="nav-text">code of contributor贡献者守则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一次提交流程"><span class="nav-number">4.</span> <span class="nav-text">第一次提交流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码评审和修改"><span class="nav-number">5.</span> <span class="nav-text">代码评审和修改</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装环境"><span class="nav-number">1.</span> <span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取得权限"><span class="nav-number">2.</span> <span class="nav-text">取得权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code-of-contributor贡献者守则"><span class="nav-number">3.</span> <span class="nav-text">code of contributor贡献者守则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一次提交流程"><span class="nav-number">4.</span> <span class="nav-text">第一次提交流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码评审和修改"><span class="nav-number">5.</span> <span class="nav-text">代码评审和修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与别人协作"><span class="nav-number">6.</span> <span class="nav-text">与别人协作</span></a></li></ol></div>
             
 
           </div>
