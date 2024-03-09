@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本文不是fabric推广文章，虽然会提及fabric的优点，但是更多想提醒各位fabric的局限性本文不是技术入门文章，不会告诉你怎么学习fabric，也不会告诉你怎么使用fabric本文也不是理念介绍文章，虽然会按照fabric的架构来讲，但是不会详解各个模块的功能和划分依据 本文是关于以下几点 拓展性： 哪些位置是fabric鼓励各位开发可以去拓展，构建自己的应用的 哪些位置是fabric没有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fabric维度的思考">
+<meta property="og:url" content="http://yoursite.com/2017/09/04/fabric-dimension/index.html">
+<meta property="og:site_name" content="davidliu技术分享">
+<meta property="og:description" content="本文不是fabric推广文章，虽然会提及fabric的优点，但是更多想提醒各位fabric的局限性本文不是技术入门文章，不会告诉你怎么学习fabric，也不会告诉你怎么使用fabric本文也不是理念介绍文章，虽然会按照fabric的架构来讲，但是不会详解各个模块的功能和划分依据 本文是关于以下几点 拓展性： 哪些位置是fabric鼓励各位开发可以去拓展，构建自己的应用的 哪些位置是fabric没有">
+<meta property="og:locale">
+<meta property="og:image" content="https://hyperledger-fabric.readthedocs.io/zh-cn/latest/_images/network.diagram.1.png">
+<meta property="article:published_time" content="2017-09-04T09:56:22.000Z">
+<meta property="article:modified_time" content="2024-03-09T00:04:17.488Z">
+<meta property="article:author" content="davidLiu">
+<meta property="article:tag" content="区块链">
+<meta property="article:tag" content="hyperledger">
+<meta property="article:tag" content="fabric">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hyperledger-fabric.readthedocs.io/zh-cn/latest/_images/network.diagram.1.png">
+
+<link rel="canonical" href="http://yoursite.com/2017/09/04/fabric-dimension/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>fabric维度的思考 | davidliu技术分享</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="تشغيل شريط التصفح">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">davidliu技术分享</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>الأرشيفات</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/fabric-dimension/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="davidLiu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="davidliu技术分享">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          fabric维度的思考
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">نُشر في</span>
+
+              <time title="أُنشأ: 2017-09-04 17:56:22" itemprop="dateCreated datePublished" datetime="2017-09-04T17:56:22+08:00">2017-09-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">عُدل في</span>
+                <time title="عُدل: 2024-03-09 08:04:17" itemprop="dateModified" datetime="2024-03-09T08:04:17+08:00">2024-03-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文不是fabric推广文章，虽然会提及fabric的优点，但是更多想提醒各位fabric的局限性<br>本文不是技术入门文章，不会告诉你怎么学习fabric，也不会告诉你怎么使用fabric<br>本文也不是理念介绍文章，虽然会按照fabric的架构来讲，但是不会详解各个模块的功能和划分依据</p>
+<p>本文是关于以下几点</p>
+<h1 id="拓展性："><a href="#拓展性：" class="headerlink" title="拓展性："></a>拓展性：</h1><ol>
+<li>哪些位置是fabric鼓励各位开发可以去拓展，构建自己的应用的</li>
+<li>哪些位置是fabric没有明说，但是在当前稳定版本下实践证明可以进行拓展的</li>
+<li>哪些位置是fabric不鼓励的操作，但是在某些版本下依然可以通过入侵式的方法做到的</li>
+</ol>
+<h1 id="维度：-拓展性1"><a href="#维度：-拓展性1" class="headerlink" title="维度： 拓展性1"></a>维度： 拓展性1</h1><p><img src="https://hyperledger-fabric.readthedocs.io/zh-cn/latest/_images/network.diagram.1.png" alt="image"></p>
+<h2 id="通道"><a href="#通道" class="headerlink" title="通道"></a>通道</h2><p>通道是一个完全隔离的空间，它可以看成是一个独立的区块链</p>
+<h2 id="MSP"><a href="#MSP" class="headerlink" title="MSP"></a>MSP</h2><p>在通道配置里<br>&#x2F;{channel}&#x2F;orderer&#x2F;mspid[]<br>&#x2F;{channel}&#x2F;application&#x2F;mspid[]</p>
+<h2 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h2><p>账本物理上托管在peer节点上，逻辑上托管在通道上</p>
+<p>节点加入通道后，存留着通道的配置块</p>
+<p>节点的启动需要msp_config, 通常为服务器的私钥以及签发的证书，</p>
+<ul>
+<li>加入通道时，被通道上的msp根证书验证</li>
+<li>客户端安装链码时，本地式地验证客户端</li>
+</ul>
+<h2 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h2><p>私有数据集PDC（包括implict collection）：&#x2F;{channel}&#x2F;{chaincode}&#x2F;{collection}&#x2F;<br>全局状态world state：&#x2F;{channel}&#x2F;{chaincode}&#x2F;</p>
+<h2 id="链码"><a href="#链码" class="headerlink" title="链码"></a>链码</h2><p>链码安装在节点上<br>&#x2F;{chaincode}<br>定义在通道里<br>&#x2F;{channel}&#x2F;{chaincode}<br>实例化在容器中或者CaaS服务中</p>
+<h1 id="开发效率瓶颈："><a href="#开发效率瓶颈：" class="headerlink" title="开发效率瓶颈："></a>开发效率瓶颈：</h1><p>哪些位置是开发调试时特别需要小心的，由于区块链的不可逆性，一旦写入就没法撤销而导致的测试周期缓慢的</p>
+<ul>
+<li>加入通道后无法退出</li>
+<li>安装链码后无法卸载</li>
+<li>链码实例化后，更新链码并不会自动清理旧实例化容器</li>
+<li>全局状态存储引擎选择后，无法轻易切换</li>
+</ul>
+<p>—— 未完待续—–</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"># 区块链</a>
+              <a href="/tags/hyperledger/" rel="tag"># hyperledger</a>
+              <a href="/tags/fabric/" rel="tag"># fabric</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/08/30/fabric-contribute/" rel="prev" title="如何给Hyperledger-fabric贡献代码">
+      <i class="fa fa-chevron-left"></i> 如何给Hyperledger-fabric贡献代码
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/09/04/fabric-docker-tag-latest/" rel="next" title="hyperledger/fabric-peer:不存在tag:latest">
+      hyperledger/fabric-peer:不存在tag:latest <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          المحتويات
+        </li>
+        <li class="sidebar-nav-overview">
+          عام
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8B%93%E5%B1%95%E6%80%A7%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">拓展性：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%B4%E5%BA%A6%EF%BC%9A-%E6%8B%93%E5%B1%95%E6%80%A71"><span class="nav-number">2.</span> <span class="nav-text">维度： 拓展性1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E9%81%93"><span class="nav-number">2.1.</span> <span class="nav-text">通道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MSP"><span class="nav-number">2.2.</span> <span class="nav-text">MSP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8A%82%E7%82%B9"><span class="nav-number">2.3.</span> <span class="nav-text">节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81"><span class="nav-number">2.4.</span> <span class="nav-text">状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E7%A0%81"><span class="nav-number">2.5.</span> <span class="nav-text">链码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%95%88%E7%8E%87%E7%93%B6%E9%A2%88%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">开发效率瓶颈：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">davidLiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">المقالات</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">الوسوم</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">davidLiu</span>
+</div>
+  <div class="powered-by">تطبيق الموقع <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

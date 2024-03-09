@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="今天整理过去的笔记时，发现之前我记录了一个关于android typeface字体设置的辟谣笔记这里分享出来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android中通过typeface设置字体">
+<meta property="og:url" content="http://yoursite.com/2017/10/29/android-typeface/index.html">
+<meta property="og:site_name" content="davidliu技术分享">
+<meta property="og:description" content="今天整理过去的笔记时，发现之前我记录了一个关于android typeface字体设置的辟谣笔记这里分享出来">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-10-29T14:03:06.000Z">
+<meta property="article:modified_time" content="2024-03-07T11:14:28.773Z">
+<meta property="article:author" content="davidLiu">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2017/10/29/android-typeface/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Android中通过typeface设置字体 | davidliu技术分享</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="تشغيل شريط التصفح">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">davidliu技术分享</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>الأرشيفات</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/29/android-typeface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="davidLiu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="davidliu技术分享">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android中通过typeface设置字体
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">نُشر في</span>
+
+              <time title="أُنشأ: 2017-10-29 22:03:06" itemprop="dateCreated datePublished" datetime="2017-10-29T22:03:06+08:00">2017-10-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">عُدل في</span>
+                <time title="عُدل: 2024-03-07 19:14:28" itemprop="dateModified" datetime="2024-03-07T19:14:28+08:00">2024-03-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>今天整理过去的笔记时，发现之前我记录了一个关于android typeface字体设置的辟谣笔记<br>这里分享出来</p>
+<span id="more"></span>
+
+<p><a href="http://www.cnblogs.com/bravestarrhu/archive/2012/07/17/2595598.html">http://www.cnblogs.com/bravestarrhu/archive/2012/07/17/2595598.html</a><br>链接的文章里面有这么一段话：</p>
+<blockquote>
+<p>&#x2F;&#x2F;将字体文件保存在assets&#x2F;fonts&#x2F;目录下，创建Typeface对象<br>Typeface typeFace &#x3D;Typeface.createFromAsset(getAssets(),”fonts&#x2F;HandmadeTypewriter.ttf”);<br>&#x2F;&#x2F;使用字体<br>textView.setTypeface(typeFace);</p>
+</blockquote>
+<p>经过测试发现，fonts目录并不是关键字，直接放在asset根目录里面也是一样可以的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Typefacecustom_font=Typeface.createFromAsset(getAssets(),&quot;enter_the_grid.ttf&quot;);</span><br></pre></td></tr></table></figure>
+<p>这样就足够了</p>
+<hr>
+<h2 id="PS-喜报-Oreo开始终于支持将字体文件作为资源放置在res目录下"><a href="#PS-喜报-Oreo开始终于支持将字体文件作为资源放置在res目录下" class="headerlink" title="PS 喜报 Oreo开始终于支持将字体文件作为资源放置在res目录下"></a>PS 喜报 Oreo开始终于支持将字体文件作为资源放置在res目录下</h2><blockquote>
+<p>Android 8.0 (API level 26) introduces a new feature, Fonts in XML, which lets you use fonts as resources. </p>
+</blockquote>
+<p>来自 <a href="https://developer.android.com/guide/topics/ui/look-and-feel/fonts-in-xml.html">https://developer.android.com/guide/topics/ui/look-and-feel/fonts-in-xml.html</a> </p>
+<hr>
+<h2 id="彩蛋：当EditText的InputType属于password大类时，无法给EditText设置字体"><a href="#彩蛋：当EditText的InputType属于password大类时，无法给EditText设置字体" class="headerlink" title="彩蛋：当EditText的InputType属于password大类时，无法给EditText设置字体"></a>彩蛋：当EditText的InputType属于password大类时，无法给EditText设置字体</h2><p>password的变体包括：</p>
+<ul>
+<li>textPassword</li>
+<li>numberPassword</li>
+<li>textVisiblePassword</li>
+<li>textWebPassword</li>
+</ul>
+<p>以上4种变体，<strong>除了textVisiblePassword之外</strong>，都是无法通过android:fontFamily或者其他方式设置字体的</p>
+<blockquote>
+<p>为什么要给被覆盖了的密码输入框设置字体呢？</p>
+</blockquote>
+<p>因为，像<code>android.support.design.widget.TextInputLayout</code>这类的输入框装饰器里，浮动提示或者placeholder型提示是可见的，意味着还是有空间让特定字体去发挥的。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/09/14/fabric-batch-configtx/" rel="prev" title="configtx.yaml中两个参数AbsoluteMaxBytes， PreferredMaxBytes的分别">
+      <i class="fa fa-chevron-left"></i> configtx.yaml中两个参数AbsoluteMaxBytes， PreferredMaxBytes的分别
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/11/07/fabric-node-sdk-code-style/" rel="next" title="fabric-node-sdk鲜为人知的代码规范要求">
+      fabric-node-sdk鲜为人知的代码规范要求 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          المحتويات
+        </li>
+        <li class="sidebar-nav-overview">
+          عام
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PS-%E5%96%9C%E6%8A%A5-Oreo%E5%BC%80%E5%A7%8B%E7%BB%88%E4%BA%8E%E6%94%AF%E6%8C%81%E5%B0%86%E5%AD%97%E4%BD%93%E6%96%87%E4%BB%B6%E4%BD%9C%E4%B8%BA%E8%B5%84%E6%BA%90%E6%94%BE%E7%BD%AE%E5%9C%A8res%E7%9B%AE%E5%BD%95%E4%B8%8B"><span class="nav-number">1.</span> <span class="nav-text">PS 喜报 Oreo开始终于支持将字体文件作为资源放置在res目录下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%A9%E8%9B%8B%EF%BC%9A%E5%BD%93EditText%E7%9A%84InputType%E5%B1%9E%E4%BA%8Epassword%E5%A4%A7%E7%B1%BB%E6%97%B6%EF%BC%8C%E6%97%A0%E6%B3%95%E7%BB%99EditText%E8%AE%BE%E7%BD%AE%E5%AD%97%E4%BD%93"><span class="nav-number">2.</span> <span class="nav-text">彩蛋：当EditText的InputType属于password大类时，无法给EditText设置字体</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">davidLiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">المقالات</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">الوسوم</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">davidLiu</span>
+</div>
+  <div class="powered-by">تطبيق الموقع <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

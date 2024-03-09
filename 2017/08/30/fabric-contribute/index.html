@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本文整理了刘文亮的指引，仅作为对https:&#x2F;&#x2F;yeasy.gitbooks.io&#x2F;blockchain_guide&#x2F;hyperledger&#x2F;contribute.html的补充说明，并一并感谢">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何给Hyperledger-fabric贡献代码">
+<meta property="og:url" content="http://yoursite.com/2017/08/30/fabric-contribute/index.html">
+<meta property="og:site_name" content="davidliu技术分享">
+<meta property="og:description" content="本文整理了刘文亮的指引，仅作为对https:&#x2F;&#x2F;yeasy.gitbooks.io&#x2F;blockchain_guide&#x2F;hyperledger&#x2F;contribute.html的补充说明，并一并感谢">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-08-30T02:29:39.000Z">
+<meta property="article:modified_time" content="2024-03-07T11:14:28.774Z">
+<meta property="article:author" content="davidLiu">
+<meta property="article:tag" content="区块链">
+<meta property="article:tag" content="hyperledger">
+<meta property="article:tag" content="fabric">
+<meta property="article:tag" content="gerrit">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2017/08/30/fabric-contribute/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>如何给Hyperledger-fabric贡献代码 | davidliu技术分享</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="تشغيل شريط التصفح">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">davidliu技术分享</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>الأرشيفات</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/30/fabric-contribute/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="davidLiu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="davidliu技术分享">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何给Hyperledger-fabric贡献代码
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">نُشر في</span>
+
+              <time title="أُنشأ: 2017-08-30 10:29:39" itemprop="dateCreated datePublished" datetime="2017-08-30T10:29:39+08:00">2017-08-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">عُدل في</span>
+                <time title="عُدل: 2024-03-07 19:14:28" itemprop="dateModified" datetime="2024-03-07T19:14:28+08:00">2024-03-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文整理了刘文亮的指引，仅作为对<a href="https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html">https://yeasy.gitbooks.io/blockchain_guide/hyperledger/contribute.html</a><br>的补充说明，并一并感谢</p>
+<span id="more"></span>
+<h2 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h2><ul>
+<li>git</li>
+<li>gerrit所需的组件：git-review，安装方法见 <a href="https://www.mediawiki.org/wiki/Gerrit/git-review">https://www.mediawiki.org/wiki/Gerrit/git-review</a></li>
+</ul>
+<h2 id="取得权限"><a href="#取得权限" class="headerlink" title="取得权限"></a>取得权限</h2><p>注册 Linux foundation ID，就是linux基金会的账号，简称为LFID </p>
+<p><em>gerrit基本不支持匿名操作</em></p>
+<h2 id="code-of-contributor贡献者守则"><a href="#code-of-contributor贡献者守则" class="headerlink" title="code of contributor贡献者守则"></a>code of contributor贡献者守则</h2><p>代码是为了修复jira上提出的issue的，如果是新功能，也要创造一个新issue去‘修复’<br>记下我们要修复的问题的序号，比如FAB-XXXX，我们后面会用到</p>
+<h2 id="第一次提交流程"><a href="#第一次提交流程" class="headerlink" title="第一次提交流程"></a>第一次提交流程</h2><ol>
+<li><p>进入<a href="https://gerrit.hyperledger.org/%EF%BC%8C%E5%B9%B6%E7%99%BB%E9%99%86%E4%BD%A0%E7%9A%84LFID">https://gerrit.hyperledger.org/，并登陆你的LFID</a><br> <em>登陆入口在右上方，Search按钮下面有个‘Sign in’</em>  </p>
+</li>
+<li><p>查看项目列表，找到对应项目，这里以 lf-sandbox 项目为例子<br> <em>lf-sandbox项目不是 fabric项目，而是官方推荐拿来学习 gerrit用的沙盒项目</em></p>
+</li>
+<li><p>点选左上方的<code>Clone with commit-msg hook</code>按钮<br> <em>错误示例：如果没有登陆你的 LFID，你将看不到 <code>Clone with commit-msg hook</code>按钮，只能看到 anonymous http 命令<code>git clone https://gerrit.hyperledger.org/r/lf-sandbox</code></em><br> <em>匿名clone下来的项目在后面提交时会出现commit hook缺失的错误</em></p>
+</li>
+<li><p>在按钮同一栏的右边，选择验证方式 ssh|http，并复制其下方的clone命令</p>
+<ul>
+<li>ssh验证：需要先生成本机的ssh pubkey文件，并在<a href="https://gerrit.hyperledger.org/%E7%9A%84%E4%B8%AA%E4%BA%BA%E8%AE%BE%E7%BD%AE%E4%B8%AD%E5%B0%86pubkey%E7%9A%84%E5%86%85%E5%AE%B9%E5%8A%A0%E5%85%A5%E5%88%97%E8%A1%A8%E4%B8%AD%EF%BC%8C%E6%89%8D%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8">https://gerrit.hyperledger.org/的个人设置中将pubkey的内容加入列表中，才可以使用</a><br> 好处：操作时不用交互输入密码<br> 坏处：每台机器的pubkey都需要加入个人设置中，某些情况下会因为防火墙timeout  </li>
+<li>http验证 <strong>推荐</strong>：<br> clone命令形如： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://&lt;LFID&gt;@gerrit.hyperledger.org/r/a/lf-sandbox &amp;&amp; (cd lf-sandbox &amp;&amp; curl -kLo `git rev-parse --git-dir`/hooks/commit-msg https://&lt;LFID&gt;@gerrit.hyperledger.org/r/tools/hooks/commit-msg; chmod +x `git rev-parse --git-dir`/hooks/commit-msg)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>选择一个父目录，执行刚才复制的clone命令，下载代码</p>
+</li>
+<li><p>重命名远端 <code>$ git remote rename origin gerrit</code><br> 如果没重命名，那么后面在执行 <code>$ git review --setup</code>时，由于的确没有.gitreview文件，因此一定会出现_</p>
+<blockquote>
+<p>No ‘.gitreview’ file found in this repository. We don’t know where your gerrit is. Please manually create a remote named gerrit and try again.  </p>
+</blockquote>
+</li>
+<li><p>创建一个branch，名字格式为 FAB-XXXX （issue序号）  </p>
+   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b FAB-XXXX</span><br></pre></td></tr></table></figure></li>
+<li><p>正式干活了，修复issue</p>
+</li>
+<li><p>提交 ：<code>$ git commit -a -s</code><br><em>-s 选项是用于在commit message中自动生成sign off签名的</em></p>
+</li>
+<li><p>git会进入你设置的文本编辑器里编辑commit message<br>message推荐以这种格式编写</p>
+<blockquote>
+<p>[FAB-XXXX] &lt;标题,官方文档说本行不能超过72个字符，实测不能超过55个字符&gt;<br>&lt;空行&gt;<br>This fixes #FAB-XXXX<br>&lt;内容：每行不超过80字符，其中应该包括<br>    - 你的提交做了什么？<br>    - 为何选用这种方式去进行改动<br>    - 为何这种改动能够成功，比如提交你成功的代码测试结果</p>
+<blockquote>
+</blockquote>
+</blockquote>
+</li>
+<li><p>推出送申： <code>$ git review</code><br><em>gerrit不用 push作为推出</em></p>
+</li>
+</ol>
+<h2 id="代码评审和修改"><a href="#代码评审和修改" class="headerlink" title="代码评审和修改"></a>代码评审和修改</h2><p>提交成功之后，可以去gerrit.hyperledger.org&#x2F;r&#x2F;上查看自己最新提交的patchSet信息<br>0. 检查你的变更请求Change Request(CR)是否通过了Hyperledger JobBuilder检测<br>为了确保代码的稳定性，官方基于Jenkins设立了一套持续集成（CI）流程。这套流程会在每次patchSet被推出之后，尝试在各种平台上运行测试。<br>贡献者有责任去保证自己的代码能供通过这些测试<br>测试通过后JobBuilder会自动给你的变更投票 +1，否则则会投 -1<br>    <strong>注意，有的时候CI流程会因为莫名的原因而出错，所以你需要去看log来确保不是自己的锅。</strong><br>    如果确实跟你无关，你可以通过在你的CR页面上回复’reverify’来重启CI流程。</p>
+<pre><code>关于CI流程的更细节信息详见
+- https://github.com/hyperledger/ci-management/blob/master/docs/fabric_ci_process.md
+
+**号外**: @rameshthoomu 提供了专属node-sdk的更原子化的reverify关键字，回复其中一个可以单独重启某个CI子过程。
+这样只需要重启错误的那一两个子过程，而不是重启整个CI，来加速验证迭代  
+如：在x86_64上的用``reverify-node8x``,在s390x上的用``reverify-node8z``
+此外，现在node6版本的平台测试也已经不再是默认包含的了
+    
+</code></pre>
+<ol>
+<li><p>添加审阅者Add Reviewer<br>一般都是添加一些活跃并具有影响力的大拿，比如BaohuaYang，Gari Signh，node-sdk的维护者Jim Zhang，Bret Harrison，核心机制维护Yacov Manevich<br>当然最有话语权的还是你所提交的目标仓库的维护者，务必是要邀请他加入审阅的，只有维护者才有权限对你的patch进行merge</p>
+<ul>
+<li>如何找到维护者：以node-sdk为例 维护者列表在：<br> <a href="https://github.com/hyperledger/fabric-sdk-node/blob/master/MAINTAINERS.md">https://github.com/hyperledger/fabric-sdk-node/blob/master/MAINTAINERS.md</a></li>
+<li>如何快速联系维护者：在rocketChat的PR专属频道发布关于你变更的消息 #fabric-pr-review</li>
+</ul>
+<p> <strong>审阅者列表在change页的中间位置</strong></p>
+</li>
+<li><p>更新issue状态<br>Gari Singh指出</p>
+<blockquote>
+<p>once you submit a CR for review, please make sure you update the status of the JIRA to “In Review” and add the CR link in a comment<br>“在你的CR提交之后，请将jira上issue的状态变更为‘In Review’，并且添加一条包含该CR链接的评论”</p>
+</blockquote>
+</li>
+<li><p>修改提交<br>如果评审没有通过，即有Reviewer给你的patchSet评论并扣分了，则需要做进一步的修正</p>
+<blockquote>
+<p>修正过程跟第一次提交类似，在当前的branch：FAB-XXXX里面修改好之后，使用如下命令修改提交<br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -a --amend</span><br></pre></td></tr></table></figure><br>接着再进行git review就可以了</p>
+</blockquote>
+</li>
+<li><p>合并<br>如果仓库维护者认可了你的patch，他会给你的最终patchSet加分并回复说你的change将会被合并到主分支上</p>
+</li>
+</ol>
+<h2 id="与别人协作"><a href="#与别人协作" class="headerlink" title="与别人协作"></a>与别人协作</h2><p>感谢Dave Enyeart的提醒</p>
+<blockquote>
+<p>Simply reach out to the initial contributor either via rocket.chat or gerrit review or jira to coordinate, and then you can Checkout the latest patch under gerrit Download link, make your updates, <code>git commit -s --amend</code> to update and sign the commit, then push as normal.</p>
+</blockquote>
+<ol>
+<li>出于礼貌，先跟原作者通过rocketChat，gerrit review或者jira issue的方式联系沟通，表达你愿意在他的CR做进一步修改的意愿。</li>
+<li>在patch页面的右上角，账户名字的左下方，你能看到一个名为 Download 的下拉菜单，复制运行它所提供的Checkout命令，如:   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git fetch https://davidkhala@gerrit.hyperledger.org/r/a/fabric-sdk-node refs/changes/09/11609/2 &amp;&amp; git checkout FETCH_HEAD</span><br></pre></td></tr></table></figure>
+ 运行后，branch就会下载到你本机上</li>
+<li>下载后，当前的仓库会处于一个 detached head上，为了方便管理，应该在这个head上创建一个branch（同上） <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b FAB-XXXX</span><br></pre></td></tr></table></figure></li>
+<li>在branch FAB-XXXX上进行修改</li>
+<li>提交时使用修改提交模式 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -a --amend -s</span><br></pre></td></tr></table></figure></li>
+<li>推出方式同上 $ git review</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"># 区块链</a>
+              <a href="/tags/hyperledger/" rel="tag"># hyperledger</a>
+              <a href="/tags/fabric/" rel="tag"># fabric</a>
+              <a href="/tags/gerrit/" rel="tag"># gerrit</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/05/24/gitignore-windows-path/" rel="prev" title="排雷：gitignore_global在windows环境下的路径写法">
+      <i class="fa fa-chevron-left"></i> 排雷：gitignore_global在windows环境下的路径写法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/09/04/fabric-dimension/" rel="next" title="fabric维度的思考">
+      fabric维度的思考 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          المحتويات
+        </li>
+        <li class="sidebar-nav-overview">
+          عام
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%96%E5%BE%97%E6%9D%83%E9%99%90"><span class="nav-number">2.</span> <span class="nav-text">取得权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code-of-contributor%E8%B4%A1%E7%8C%AE%E8%80%85%E5%AE%88%E5%88%99"><span class="nav-number">3.</span> <span class="nav-text">code of contributor贡献者守则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">第一次提交流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%AF%84%E5%AE%A1%E5%92%8C%E4%BF%AE%E6%94%B9"><span class="nav-number">5.</span> <span class="nav-text">代码评审和修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8E%E5%88%AB%E4%BA%BA%E5%8D%8F%E4%BD%9C"><span class="nav-number">6.</span> <span class="nav-text">与别人协作</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">davidLiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">المقالات</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">الوسوم</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">davidLiu</span>
+</div>
+  <div class="powered-by">تطبيق الموقع <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

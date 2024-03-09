@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读..&#x2F;src&#x2F;test&#x2F;java&#x2F;org&#x2F;hyperledger&#x2F;fabric&#x2F;sdkintegration&#x2F;End2endAndBackAgainIT.java和同目录下的End2endIT也足够进行开发工作了 测试代码会在这里更新：https:&#x2F;&#x2F;github.com&#x2F;dav">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对比node-sdk，fabric-java-sdk开发e2e测试的一些注意点">
+<meta property="og:url" content="http://yoursite.com/2017/11/08/fabric-java-sdk-comment/index.html">
+<meta property="og:site_name" content="davidliu技术分享">
+<meta property="og:description" content="与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读..&#x2F;src&#x2F;test&#x2F;java&#x2F;org&#x2F;hyperledger&#x2F;fabric&#x2F;sdkintegration&#x2F;End2endAndBackAgainIT.java和同目录下的End2endIT也足够进行开发工作了 测试代码会在这里更新：https:&#x2F;&#x2F;github.com&#x2F;dav">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-11-08T06:48:07.000Z">
+<meta property="article:modified_time" content="2024-03-07T11:14:28.776Z">
+<meta property="article:author" content="davidLiu">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2017/11/08/fabric-java-sdk-comment/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>对比node-sdk，fabric-java-sdk开发e2e测试的一些注意点 | davidliu技术分享</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="تشغيل شريط التصفح">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">davidliu技术分享</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>الأرشيفات</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/08/fabric-java-sdk-comment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="davidLiu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="davidliu技术分享">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          对比node-sdk，fabric-java-sdk开发e2e测试的一些注意点
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">نُشر في</span>
+
+              <time title="أُنشأ: 2017-11-08 14:48:07" itemprop="dateCreated datePublished" datetime="2017-11-08T14:48:07+08:00">2017-11-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">عُدل في</span>
+                <time title="عُدل: 2024-03-07 19:14:28" itemprop="dateModified" datetime="2024-03-07T19:14:28+08:00">2024-03-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>与node-sdk相比有利有弊，由于Java本身机制原因，代码简洁，对象访问权限也控制的更好，虽然没有文档，但是通过阅读<br><code>../src/test/java/org/hyperledger/fabric/sdkintegration/End2endAndBackAgainIT.java</code><br>和同目录下的<code>End2endIT</code>也足够进行开发工作了</p>
+<p>测试代码会在这里更新：<a href="https://github.com/davidkhala/delphi-fabric/tree/master/java">https://github.com/davidkhala/delphi-fabric/tree/master/java</a></p>
+<span id="more"></span>
+
+<ul>
+<li>目前java-sdk的tags最新只到1.0.1，远远赶不上node-sdk的进度，因此在使用时注意检查fabric容器的版本与sdk的版本是否一致</li>
+</ul>
+<hr>
+<h3 id="name属性："><a href="#name属性：" class="headerlink" title="name属性："></a>name属性：</h3><p>相对于node-sdk里面的对象，很多java-sdk的对象，包括Peer，EventHub对象，都多了一个会进行检查的name属性，根据我观察，除了作为一个错误日志里的标签之外，没有别的用途</p>
+<h3 id="Client对象"><a href="#Client对象" class="headerlink" title="Client对象"></a>Client对象</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//获取Client对象的方法</span><br><span class="line">HFClient client = HFClient.createNewInstance();</span><br><span class="line">client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());//设CryptoSuite为默认的格式，对应node-sdk里面的BaseClient.newCryptoSuite()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>由于Channel和Client的紧密关系，经常需要在用Channe时获取它蕴含的Client对象，我自己准备了一个静态方法通过反射机制来获取它 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static HFClient getClient(Channel channel) throws NoSuchFieldException, IllegalAccessException &#123;</span><br><span class="line">        Field f = Channel.class.getDeclaredField(&quot;client&quot;); //NoSuchFieldException</span><br><span class="line">        f.setAccessible(true);</span><br><span class="line">        return (HFClient) f.get(channel);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="User对象"><a href="#User对象" class="headerlink" title="User对象"></a>User对象</h3><ul>
+<li>User对象是一个接口，其中需要实现的方法是各类getter，其中比较重要的除了name之外，还有<code>String MspId;</code>和<code>Enrollment enrollment;</code>  </li>
+<li><code>Enrollment</code>对象依然是个接口，用来保存PrivateKey和证书<code>String cert</code>的，在使用User之前请务必将enrollment设置正确。</li>
+<li>对于由<code>cryptogen</code>生成的目录结构来说，PrivateKey可以对应<code>msp/keystore</code>下面的*_sk文件，证书对应<code>msp/signcerts</code>下面的证书文件</li>
+<li>官方读取PrivateKey的方案: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//通过sdk内置的Bouncy Castle库来导入的</span><br><span class="line">static PrivateKey getPrivateKeyFromBytes(byte[] data) throws IOException, NoSuchProviderException, NoSuchAlgorithmException, InvalidKeySpecException &#123;</span><br><span class="line">    final Reader pemReader = new StringReader(new String(data));</span><br><span class="line">    final PrivateKeyInfo pemPair;</span><br><span class="line">    PEMParser pemParser = new PEMParser(pemReader);</span><br><span class="line">    pemPair = (PrivateKeyInfo) pemParser.readObject();</span><br><span class="line"></span><br><span class="line">    return new JcaPEMKeyConverter().setProvider(BouncyCastleProvider.PROVIDER_NAME).getPrivateKey(pemPair);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>同样的，User对象准备好之后将其设到Client里<code>client.setUserContext(user)</code></li>
+</ul>
+<h2 id="Channel对象"><a href="#Channel对象" class="headerlink" title="Channel对象"></a>Channel对象</h2><p>由于channel的工厂构造方法和构造器都是包私有的，我们一般通过<code>client.newChannel(...)</code>来获取channel对象。该方法有两个重载</p>
+<ul>
+<li><code>newChannel(String name)</code> 不会造成实际的影响，单纯只是新建一个对象<ul>
+<li>相当于Client.js里的<code>newChannel(name)</code>，通常用于当channel已经在fabric网络上存在的时候</li>
+</ul>
+</li>
+<li><code>newChannel(String name, Orderer orderer, ChannelConfiguration channelConfiguration, byte[]... channelConfigurationSignatures)</code><ul>
+<li>相当于Client.js里面的<code>createChannel(request)</code>，向Orderer发出请求去创建channel</li>
+<li><code>channelConfiguration</code>通过<code>new ChannelConfiguration(channelFile)</code>生成</li>
+<li><code>channelConfigurationSignatures</code>可以通过<code>client.getChannelConfigurationSignature(channelConfiguration, client.getUserContext())</code>生成</li>
+</ul>
+</li>
+<li>无论通过哪种方式生成，都可以在之后执行<code>channel.initialize()</code><ul>
+<li>由于在java-sdk中，EventHub的<code>connect()</code>方法是包私有的，而调用它的唯一公有方法是channel.initialize，因此eventHub不能像node-sdk那样独立操作，而必须先通过<code>channel.addEventHub(eventHub)</code>添加到channel，然后再次运行channel.initialize，才可以让这些eventHub启动</li>
+</ul>
+</li>
+</ul>
+<h3 id="Chaincode"><a href="#Chaincode" class="headerlink" title="Chaincode"></a>Chaincode</h3><p>无论是install还是instantiate，在对应的ProposalRequest里都会需要<code>setChaincodeID(chaincodeID)</code>，但是要注意: chaincodeID是一个ChaincodeID类的对象而不是String，而它除了chaincodeName之外还包括version，path这两个信息，这与node-sdk中的chaincodeID &#x3D;&#x3D; chaincodeName语义不同,<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ChaincodeID chaincodeID = ChaincodeID.newBuilder().setName(ccName).setVersion(ccVersion).setPath(ccPath).build();</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>transientMap必须非null，否则会报错<br><code>instantiateProposalRequest.setTransientMap(new HashMap&lt;&gt;())</code></li>
+<li>对于instantiate和invoke来说，第一段提交Proposal之后需要通过<code>channel.sendTransaction(successResponses)</code>进行第二段提交，<ul>
+<li>其中successResponses为第一段提交返回结果当中，getStatus() &#x3D;&#x3D; Success的部分</li>
+<li>第二段提交会返回一个CompletableFuture<TransactionEvent>结果<code>future</code>，如果之前在channel当中正确设置了eventHub，执行成功的交易可以直接通过<code>BlockEvent.TransactionEvent successEvent = future.get()</code>取出来。这点相比node-sdk提供了更多的方便，因为node-sdk好像只提供了eventHub注册监听器的方式获得时间<ul>
+<li>如果eventHub没有设置好，那么程序会一直等待get()方法返回</li>
+<li>java-sdk也支持注册监听器的方法来获取更多的事件内容，详情见<code>channel.registerBlockListener(blockEvent-&gt;&#123;...&#125;)</code>方法</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/11/07/fabric-node-sdk-code-style/" rel="prev" title="fabric-node-sdk鲜为人知的代码规范要求">
+      <i class="fa fa-chevron-left"></i> fabric-node-sdk鲜为人知的代码规范要求
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/08/09/twgc-voters/" rel="next" title="如何加入TWGC">
+      如何加入TWGC <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          المحتويات
+        </li>
+        <li class="sidebar-nav-overview">
+          عام
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#name%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">name属性：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">Client对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#User%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.</span> <span class="nav-text">User对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Channel%E5%AF%B9%E8%B1%A1"><span class="nav-number"></span> <span class="nav-text">Channel对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Chaincode"><span class="nav-number">1.</span> <span class="nav-text">Chaincode</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">davidLiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">المقالات</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">الوسوم</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">davidLiu</span>
+</div>
+  <div class="powered-by">تطبيق الموقع <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
